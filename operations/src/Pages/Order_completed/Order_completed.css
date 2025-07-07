@@ -1,0 +1,255 @@
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out; /* Fade-in animation */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+    position: relative;
+    animation: slideUp 0.4s ease-in-out; /* Smooth slide-up animation */
+    text-align: left; /* Align text to the left */
+}
+
+.close-button {
+    background-color: transparent;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+    color: #333; /* Subtle dark gray */
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #e74c3c; /* Bright red on hover */
+}
+
+.modal-content h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Dark blue-gray */
+    border-bottom: 2px solid #3498db; /* Accent underline */
+    padding-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.modal-content ul {
+    list-style: disc;
+    padding-left: 25px; /* Add space for bullet points */
+    margin-top: 15px;
+}
+
+.modal-content ul li {
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: #333; /* Slightly darker text for better visibility */
+}
+
+.modal-content h3 {
+    margin-top: 25px;
+    font-size: 18px;
+    color: #2c3e50;
+    border-bottom: 1px solid #ddd; /* Subtle divider for sections */
+    padding-bottom: 5px;
+}
+
+.modal-content .details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.modal-content .details-row p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* General page styles */
+.left-arrow-button, .back-button {
+    padding: 10px 16px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: fixed;
+    top: 150px;
+    left: 35px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.left-arrow-button:hover, .back-button:hover {
+    background-color: #2874a6;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 110px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-table th {
+    background-color: #2c3e50;
+    color: #fff;
+    text-align: left;
+    padding: 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.order-table td {
+    padding: 16px;
+    font-size: 14px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.order-id-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.order-id-link:hover {
+    color: #2874a6;
+    text-decoration: underline;
+}
+
+.customer-details {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.highlight-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.location-container {
+    display: flex;
+    justify-content: space-between; /* Pushes text and symbol to opposite ends */
+    align-items: center; /* Vertically aligns the content */
+    width: 100%; /* Ensures it fills the available space */
+    padding: 8px 12px; /* Adds some padding inside the container */
+    border: 1px solid #ddd; /* Optional: Add a border to the box */
+    border-radius: 4px; /* Optional: Makes the box edges rounded */
+}
+
+.location-button {
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    margin-left: auto; /* Ensures it stays at the far end */
+}
+
+
+
+.location-button:hover {
+    color: #2874a6;
+}
+
+.address-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+    font-size: 14px;
+    color: #555;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.address-container.visible {
+    max-height: 150px;
+    opacity: 1;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+ul li {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+td ul {
+    margin: 0;
+    padding: 0;
+}
+
+.order-table th, 
+.order-table td {
+    border: 2px solid #000; /* Black and bold border */
+    font-weight: bold; /* Ensure text is bold as well */
+}

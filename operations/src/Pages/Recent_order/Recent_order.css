@@ -1,0 +1,89 @@
+.order-container {
+  position: absolute; /* Changed from absolute for better responsiveness */
+  left: 10px; /* Remove fixed left positioning */
+  width: 90%; /* Adjust width for smaller screens */
+  max-width: 1000px; /* Prevents excessive width */
+  margin: 0 auto; /* Centers container */
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  top: auto; /* Remove fixed positioning */
+  padding: 20px 0;
+}
+
+.recent-orders {
+  width: 100%; 
+  max-width: 800px; 
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  background: #fff;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  text-align: left;
+  padding: 10px; 
+  border-bottom: 1px solid #ddd;
+  font-weight: bold; 
+  text-transform: uppercase; 
+}
+
+.recent-orders h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .order-container {
+    width: 95%; 
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .recent-orders {
+    padding: 15px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 8px;
+    font-size: 14px; /* Reduce font size for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .order-container {
+    width: 100%;
+    padding: 5px;
+    flex-direction: column;
+  }
+
+  .recent-orders {
+    padding: 10px;
+    box-shadow: none; /* Remove shadow for small screens */
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 12px; /* Further reduce font size for small screens */
+    padding: 6px;
+  }
+
+  .recent-orders h2 {
+    font-size: 18px;
+  }
+}

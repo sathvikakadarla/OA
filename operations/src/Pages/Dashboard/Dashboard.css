@@ -1,0 +1,128 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px; 
+    min-height: 100px;
+    margin-bottom: 300px;
+}
+
+/* Rows in Dashboard */
+.first-row, .second-row, .third-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1300px;
+    margin-top: 30px;
+}
+.third-row{
+    justify-content:flex-start;
+}
+
+
+
+/* Section for individual items */
+.orders, .assigned, .order-completed, .pending,
+.admin-cancellation, .user-cancellation, .upcoming-order, .vendor-management, .credit-to-wallet, .cart {
+    width: 23%; /* Ensure consistent width */
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    /* Removed fixed height */
+}
+
+/* Images for each section */
+.orders img, .assigned img, .order-completed img, .pending img,
+.admin-cancellation img, .user-cancellation img, .upcoming-order img, .credit-to-wallet img , .cart img{
+    width: 40px;
+    height: 40px;
+    position: absolute; 
+    right: 20px;
+}
+
+/* Heading styles */
+h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    text-align: left; 
+    margin-right: 50px; 
+}
+
+/* Background colors for different sections */
+.orders {
+    background-color: #ff6f61;
+}
+
+.assigned {
+    background-color: #7c59ad;
+}
+
+.order-completed {
+    background-color: #4bda50;
+}
+
+.pending {
+    background-color: #ff9800;
+}
+
+.admin-cancellation {
+    background-color: #ff5722; 
+}
+
+.user-cancellation {
+    background-color: #3f51b5;
+}
+
+.upcoming-order {
+    background-color: #8bc34a; 
+}
+
+.vendor-management {
+    background-color: #2196f3;
+}
+.cart{
+    background-color: aqua;
+}
+
+/* Fix for Credit to Wallet Background */
+.credit-to-wallet {
+    background-color: indianred; /* Choose your preferred color */
+}
+
+/* Hover effect for sections */
+.orders:hover, .assigned:hover, .order-completed:hover, .pending:hover,
+.admin-cancellation:hover, .user-cancellation:hover, .upcoming-order:hover, .vendor-management:hover, .credit-to-wallet:hover, .cart:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); 
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .first-row, .second-row, .third-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .orders, .assigned, .order-completed, .pending,
+    .admin-cancellation, .user-cancellation, .upcoming-order, .vendor-management, .credit-to-wallet {
+        width: 90%; 
+        height: auto; /* Let height adjust based on content */
+    }
+}

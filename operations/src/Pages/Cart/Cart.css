@@ -1,0 +1,284 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Main container */
+.credit-to-wallet-container {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.credit-to-wallet-inner-container {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Input section */
+.input-section {
+  margin-bottom: 20px;
+}
+
+.input-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.input-section input {
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.input-section input:focus {
+  outline: none;
+  border-color: #2196f3;
+  background-color: #fff;
+}
+
+.input-section button {
+  padding: 10px 24px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.input-section button:hover {
+  background-color: #e64a19;
+}
+
+/* Profile Card */
+.profile-details {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f0f8ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.6s ease;
+}
+
+.profile-details h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+}
+
+.profile-details p {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.profile-details strong {
+  color: #ff5722;
+}
+
+/* View Cart Button */
+.profile-details button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.profile-details button:hover {
+  background-color: #0288d1;
+}
+
+/* Dropdown Section */
+.dropdown-selection {
+  margin-top: 35px;
+  padding: 25px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+.dropdown-selection h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #444;
+  text-transform: uppercase;
+}
+
+.dropdown-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.dropdown-group select,
+.dropdown-group input[type='number'] {
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  background-color: #ffffff;
+  color: #333; /* ensures visibility */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.dropdown-group select:focus,
+.dropdown-group input:focus {
+  border-color: #2196f3;
+  background-color: #fff;
+}
+
+.dropdown-selection button {
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.dropdown-selection button:hover {
+  background-color: #388e3c;
+}
+.dropdown-group button {
+  padding: 6px 12px;
+  font-size: 18px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dropdown-group button:hover {
+  background-color: #e64a19;
+}
+
+
+/* Cart Table */
+.cart-table {
+  margin-top: 40px;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+.cart-table h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.cart-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.cart-table th {
+  background-color: #e6f0ff;
+  font-weight: bold;
+}
+
+.cart-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.cart-table button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  background-color: #ff9800;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cart-table button:hover {
+  background-color: #fb8c00;
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 20px;
+  color: red;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .credit-to-wallet-inner-container {
+    padding: 20px;
+  }
+
+  .dropdown-group select,
+  .dropdown-group input {
+    width: 100%;
+  }
+
+  .cart-table th,
+  .cart-table td {
+    font-size: 13px;
+  }
+}

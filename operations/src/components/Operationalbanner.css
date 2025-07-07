@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .operational-banner-container {
+    width: 100%;                
+    height: calc(100vh - 100px);
+    margin-top: 0.7in;                     
+    position: fixed;            
+    top: 10px;                  
+    left: 0;
+    z-index: -1;                
+  }
+  
+  .operational-banner {
+    width: 80%;                 
+    height: 100%;                
+    object-fit: contain;   
+    object-position: center;    
+  }
+  

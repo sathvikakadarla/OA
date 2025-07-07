@@ -1,0 +1,123 @@
+/* Main container styling */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.left-arrow-button, .back-button {
+  padding: 10px 16px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  position: fixed;
+  top: 150px;
+  left: 35px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow-button:hover, .back-button:hover {
+  background-color: #2874a6;
+}
+
+/* Dropdown list styling */
+.dropdown-list {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  left: 0;
+}
+
+#dropdown {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+/* Table styling */
+.customer-container {
+  width: 100%;
+  max-width: 1200px;
+  top: 0%;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+.customer-table th,
+.customer-table td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 12px;
+}
+
+.customer-table th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.customer-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.item-content{
+  list-style: disc inside;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .back-button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  #dropdown {
+    font-size: 14px;
+    width: 150px;
+  }
+
+  .customer-table th,
+  .customer-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* Keep the dropdown fixed at the top */
+.fixed-dropdown {
+  position: sticky;
+  top: 100px;
+  background-color: #fff;
+  z-index: 1000;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Edit button styling */
+.edit-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #e67e22;
+}
+
