@@ -9,7 +9,7 @@ const History = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await fetch('http://localhost:2000/api/history');
+        const res = await fetch('https://oa-backend-qdbq.onrender.com/api/history');
         const data = await res.json();
         if (res.ok) {
           // Reverse the array so the newest entry appears first
