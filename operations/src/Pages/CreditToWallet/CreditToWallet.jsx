@@ -22,7 +22,7 @@ const CreditToWallet = () => {
 
     const fetchProfile = async () => {
         try {
-            const res = await fetch(`http://localhost:2000/api/profile/${mobileNumber}`);
+            const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/profile/${mobileNumber}`);
             const data = await res.json();
             if (res.ok) {
                 setUserProfile(data);
@@ -48,7 +48,7 @@ const CreditToWallet = () => {
         }
       
         try {
-          const res = await fetch(`http://localhost:2000/api/profile/${mobileNumber}/add-money`, {
+          const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/profile/${mobileNumber}/add-money`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ amount: Number(amount) })
@@ -65,7 +65,7 @@ const CreditToWallet = () => {
             const employeeName = employee?.name || "Unknown";
             const employeeEmail = employee?.email || "Unknown";
       
-            await fetch(`http://localhost:2000/api/history/add`, {
+            await fetch(`https://oa-backend-qdbq.onrender.com/api/history/add`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
