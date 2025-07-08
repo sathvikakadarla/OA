@@ -1,7 +1,8 @@
 import express from 'express';
 import {
   getProfileByMobile,
-  addMoneyToWallet
+  addMoneyToWallet,
+  resetWalletBalance
 } from '../controllers/profileController.js';
 
 const router = express.Router();
@@ -11,5 +12,7 @@ router.get('/:mobileNumber', getProfileByMobile);
 
 // Route to add money to wallet
 router.put('/:mobileNumber/add-money', addMoneyToWallet);
+
+router.put('/:mobileNumber/reset-balance', resetWalletBalance);
 
 export default router;
