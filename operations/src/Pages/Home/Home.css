@@ -1,0 +1,115 @@
+/* Home page base */
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
+  box-sizing: border-box;
+}
+
+/* Container for tiles */
+.tile-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* Base tile styling */
+.tile {
+  width: 220px;
+  height: 220px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* Tile 1: Dashboard */
+.tile:nth-child(1) {
+  background: linear-gradient(135deg, #42a5f5, #1e88e5); /* Blue */
+}
+
+/* Tile 2: Profile */
+.tile:nth-child(2) {
+  background: linear-gradient(135deg, #66bb6a, #43a047); /* Green */
+}
+
+/* Hover animation */
+.tile:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Glow border on hover */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+  pointer-events: none;
+}
+
+.tile:hover::before {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Icon inside tile */
+.tile img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Tile heading */
+.tile h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional description */
+.tile p {
+  font-size: 14px;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .tile {
+    width: 45vw;
+    height: 200px;
+  }
+}
+
+@media (max-width: 500px) {
+  .tile-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .tile {
+    width: 90vw;
+    height: 180px;
+  }
+}
