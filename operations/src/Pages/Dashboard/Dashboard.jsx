@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'; // Import Link for navigation
 import './Dashboard.css';
 import { assets } from '../../assets/assets';
 import Recentorders from '../Recent_order/Recent_order';
-import DeliveryPartners from '../Delivery/Delivery';
 
 const Dashboard = () => {
     return (
@@ -58,12 +57,11 @@ const Dashboard = () => {
                         <h2>Cart</h2>
                     </Link>
                 </div>
-
-                
+                <br/>
 
                 <div className='recent-and-delivery'>
                     <Recentorders /> {/* Recent Orders box */}
-                    <DeliveryPartners /> {/* Delivery Partners box */}
+                   
                 </div>
             </div>
         </>
