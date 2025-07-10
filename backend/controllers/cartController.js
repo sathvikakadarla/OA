@@ -106,10 +106,10 @@ export const getCart = async (req, res) => {
 
 export const removeFromCart = async (req, res) => {
   try {
-    const { mobileOrEmail, productId } = req.body;
+    const { mobileOrEmail, cartItemId } = req.body;
 
-    if (!mobileOrEmail || !productId) {
-      return res.status(400).json({ message: 'Identifier and productId required' });
+    if (!mobileOrEmail || !cartItemId) {
+      return res.status(400).json({ message: 'Identifier and cartItemId required' });
     }
 
     const profile = await getProfile(mobileOrEmail);
@@ -122,15 +122,17 @@ export const removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    cart.items = cart.items.filter(item => item.productId.toString() !== productId);
+    cart.items = cart.items.filter(item => item._id.toString() !== cartItemId);
     await cart.save();
 
     res.status(200).json({ success: true, message: 'Item removed from cart', cart });
 
   } catch (err) {
+    console.error('Error in removeFromCart:', err);
     res.status(500).json({ message: 'Failed to remove item' });
   }
 };
+
 
 export const clearCart = async (req, res) => {
   try {
