@@ -9,10 +9,13 @@
 .dashboard-container {
     display: flex;
     flex-direction: column;
-    padding-top: 80px; 
+    padding-top: 80px;
+    padding-left: 30px; /* Add left padding */
+    padding-right: 30px; /* Add right padding */
     min-height: 100px;
     margin-bottom: 300px;
 }
+
 
 /* Rows in Dashboard */
 .first-row, .second-row, .third-row {
