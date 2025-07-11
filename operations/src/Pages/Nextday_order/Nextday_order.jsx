@@ -101,7 +101,7 @@ const CustomerListing = ({ orders, setOrders }) => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:2000/api/orders/${editOrderId}`,
+        `https://oa-backend-qdbq.onrender.com/api/orders/${editOrderId}`,
         editableOrder
       );
       if (response.data.success) {
