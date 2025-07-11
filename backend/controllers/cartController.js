@@ -1,5 +1,6 @@
 import Cart from '../model/cartModel.js';
 import Profile from '../model/Profile.js';
+import FoodModel from '../model/foodModel.js';
 
 // Get profile by mobileNumber or email
 const getProfile = async (identifier) => {
@@ -13,45 +14,59 @@ const getProfile = async (identifier) => {
 
 export const addToCart = async (req, res) => {
   try {
-    const { mobileOrEmail, productId, quantity } = req.body;
+    const { mobileOrEmail, productId } = req.body;
+    const quantityInGrams = req.body.quantityInGrams ?? req.body.quantity;
 
-    console.log('Add to Cart Request:', req.body);
 
-    if (!mobileOrEmail || !productId || typeof quantity !== 'number' || quantity <= 0) {
+    console.log('Admin Add to Cart:', req.body);
+
+    if (!mobileOrEmail || !productId || typeof quantityInGrams !== 'number' || quantityInGrams <= 0) {
       return res.status(400).json({ message: 'Invalid request data' });
     }
 
     const profile = await getProfile(mobileOrEmail);
     if (!profile) {
-      console.log('User not found for:', mobileOrEmail);
       return res.status(404).json({ message: 'User not found' });
     }
+
+    const food = await FoodModel.findById(productId);
+    if (!food) {
+      return res.status(404).json({ message: 'Food item not found' });
+    }
+
+    const unitGrams = food.quantity; // e.g., 1000g per unit
+    const quantityInUnit = Math.ceil(quantityInGrams / unitGrams);
 
     let cart = await Cart.findOne({ profile: profile._id });
 
     if (!cart) {
-      // If cart doesn't exist, create new cart with the item
       cart = new Cart({
         profile: profile._id,
         mobileNumber: profile.mobileNumber,
-        items: [{ productId, quantity }],
+        items: [{ productId, quantityInUnit, quantityInGrams }],
       });
     } else {
-      // Always push a new item, even if it's a duplicate
-      cart.items.push({ productId, quantity });
+      const existingIndex = cart.items.findIndex(
+        item => item.productId.toString() === productId
+      );
+
+      if (existingIndex !== -1) {
+        cart.items[existingIndex].quantityInUnit += quantityInUnit;
+        cart.items[existingIndex].quantityInGrams += quantityInGrams;
+      } else {
+        cart.items.push({ productId, quantityInUnit, quantityInGrams });
+      }
     }
-    
-    
-     
+
     await cart.save();
-    console.log('Cart saved successfully');
     res.status(200).json({ success: true, message: 'Item added to cart', cart });
 
   } catch (err) {
-    console.error('Error in addToCart:', err);
+    console.error('Admin addToCart error:', err);
     res.status(500).json({ message: 'Failed to add item to cart' });
   }
 };
+
 
 
 export const getCart = async (req, res) => {
@@ -106,10 +121,10 @@ export const getCart = async (req, res) => {
 
 export const removeFromCart = async (req, res) => {
   try {
-    const { mobileOrEmail, cartItemId } = req.body;
+    const { mobileOrEmail, productId } = req.body;
 
-    if (!mobileOrEmail || !cartItemId) {
-      return res.status(400).json({ message: 'Identifier and cartItemId required' });
+    if (!mobileOrEmail || !productId) {
+      return res.status(400).json({ message: 'Identifier and productId required' });
     }
 
     const profile = await getProfile(mobileOrEmail);
@@ -122,17 +137,15 @@ export const removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    cart.items = cart.items.filter(item => item._id.toString() !== cartItemId);
+    cart.items = cart.items.filter(item => item.productId.toString() !== productId);
     await cart.save();
 
     res.status(200).json({ success: true, message: 'Item removed from cart', cart });
 
   } catch (err) {
-    console.error('Error in removeFromCart:', err);
     res.status(500).json({ message: 'Failed to remove item' });
   }
 };
-
 
 export const clearCart = async (req, res) => {
   try {
