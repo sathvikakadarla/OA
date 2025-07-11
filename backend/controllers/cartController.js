@@ -105,10 +105,23 @@ export const getCart = async (req, res) => {
       console.log('Populated Cart:', JSON.stringify(cart, null, 2));  // JSON.stringify for better visibility
   
       const flatItems = cart.items.map(item => ({
-        _id: item._id,
-        productId: item.productId,
-        quantity: item.quantity
-      }));
+  _id: item._id,
+
+  productId: {
+    _id: item.productId._id,
+    name: item.productId.name,
+    description: item.productId.description,
+    category: item.productId.category,
+    price: item.productId.price,
+    quantity: item.productId.quantity,
+    shopId: {
+      name: item.productId.shopId?.name || 'N/A'
+    }
+  },
+
+  quantityInUnit: item.quantityInUnit ?? 0,
+  quantityInGrams: item.quantityInGrams ?? 0
+}));
   
       res.status(200).json({ success: true, cart: { items: flatItems } });
   
