@@ -2,20 +2,41 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+ 
   font-family: 'Roboto', sans-serif;
 }
 
-body {
-  background-color: #ffffff;
-  color: #333;
-  font-size: 16px;
+.top-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
 }
+
+.left-panel {
+  flex: 1;
+  min-width: 300px;
+}
+
+.middle-panel {
+  flex: 0.9;  /* Slightly smaller width */
+  min-width: 280px;  /* Optional: a bit narrower min width */
+}
+
+
+.middle-panel {
+  flex: 1.2;
+  min-width: 300px;
+  margin-top: -20px; /* Adjust this value as needed */
+}
+
 
 /* Main container */
 .credit-to-wallet-container {
-  padding: 40px 20px;
+ 
   display: flex;
+  margin-top: 0;
+  padding-top: 0%;
   justify-content: center;
   background-color: #f8f8f8;
   min-height: 100vh;
@@ -25,7 +46,7 @@ body {
   width: 100%;
   max-width: 1000px;
   background-color: #fff;
-  padding: 30px;
+  padding-top: 10px;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
@@ -117,13 +138,14 @@ body {
 
 /* Dropdown Section */
 .dropdown-selection {
-  margin-top: 35px;
-  padding: 25px;
+  margin-top: 20px;        /* Reduce from 35px if previously set */
+  padding: 15px 20px;      /* Less vertical padding */
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 12px;
   animation: fadeInUp 0.5s ease-in-out;
 }
+
 
 .dropdown-selection h3 {
   margin-bottom: 20px;
@@ -133,14 +155,14 @@ body {
 }
 
 .dropdown-group {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
 }
 
 .dropdown-group label {
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: #555;
 }
 
@@ -167,7 +189,7 @@ body {
 }
 
 .dropdown-selection button {
-  padding: 12px 25px;
+  padding: 10px 20px;
   font-size: 16px;
   font-weight: 600;
   background-color: #4caf50;
@@ -175,7 +197,7 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .dropdown-selection button:hover {
@@ -199,7 +221,7 @@ body {
 
 /* Cart Table */
 .cart-table {
-  margin-top: 40px;
+  margin-top: 0px;
   animation: fadeInUp 0.5s ease-in-out;
 }
 
@@ -281,4 +303,29 @@ body {
   .cart-table td {
     font-size: 13px;
   }
+}
+.horizontal-layout {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.left-panel,
+.middle-panel,
+.right-panel {
+  flex: 1;
+  min-width: 300px;
+}
+
+.middle-panel {
+  flex: 1.2;
+}
+
+.right-panel {
+  flex: 1.5;
+}
+
+.right-panel .cart-table {
+  overflow-x: auto;
+  max-width: 100%;
 }
