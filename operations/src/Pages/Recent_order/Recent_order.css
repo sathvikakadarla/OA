@@ -1,89 +1,114 @@
+/* ========== ORDER CONTAINER ========== */
 .order-container {
-  position: absolute; /* Changed from absolute for better responsiveness */
-  left: 10px; /* Remove fixed left positioning */
-  width: 90%; /* Adjust width for smaller screens */
-  max-width: 1000px; /* Prevents excessive width */
-  margin: 0 auto; /* Centers container */
-  display: flex; 
-  justify-content: center; 
-  align-items: center;
-  top: auto; /* Remove fixed positioning */
-  padding: 20px 0;
+  width: 100%;                    /* 90% of screen width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;          /* Equal height children */
+  padding: 5px;
+  gap: 20px;
+  background-color: rgb(255, 255, 255);
+  flex-wrap: nowrap;             /* Prevent wrapping unless forced */
+  box-sizing: border-box;
 }
 
+/* ========== RECENT ORDERS BOX ========== */
 .recent-orders {
-  width: 100%; 
-  max-width: 800px; 
+  flex: 0 1 70%;                 /* Approx 70% width */
+  background: #8fc6ee;
   border: 1px solid #ccc;
-  border-radius: 8px; 
+  border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
+/* ========== HEADER INSIDE RECENT ORDERS ========== */
+.recent-orders h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* ========== ORDERS TABLE ========== */
 .orders-table {
   width: 100%;
   border-collapse: collapse;
 }
 
+.orders-table th,
+.orders-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
 .orders-table th {
-  text-align: left;
-  padding: 10px; 
+  font-weight: bold;
+  text-transform: uppercase;
   border-bottom: 1px solid #ddd;
-  font-weight: bold; 
-  text-transform: uppercase; 
 }
 
-.recent-orders h2 {
-  margin-bottom: 20px;
-  color: #333;
+/* ========== DELIVERY CONTAINER ========== */
+.delivery-container {
+  flex: 0 1 30%;                 /* Approx 30% width */
+  background-color: #ed6da0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Delivery Heading */
+.delivery-heading h2 {
   text-align: center;
+  color: #333;
+  font-weight: bold;
+  margin: 0;
+  padding: 10px 0;
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .order-container {
-    width: 95%; 
-    padding: 10px;
-  }
-}
+/* ========== RESPONSIVE STYLES ========== */
 
+/* Tablets and below: only stack if really needed */
 @media (max-width: 768px) {
   .order-container {
-    width: 100%;
-    padding: 10px;
+    flex-wrap: wrap;            /* Allow wrapping if needed */
   }
 
-  .recent-orders {
-    padding: 15px;
+  .recent-orders,
+  .delivery-container {
+    flex: 1 1 100%;             /* Take full width when stacked */
+    max-width: 100%;
   }
 
   .orders-table th,
   .orders-table td {
     padding: 8px;
-    font-size: 14px; /* Reduce font size for better readability */
+    font-size: 14px;
   }
 }
 
+/* Phones */
 @media (max-width: 480px) {
-  .order-container {
-    width: 100%;
-    padding: 5px;
-    flex-direction: column;
-  }
-
-  .recent-orders {
+  .recent-orders,
+  .delivery-container {
     padding: 10px;
-    box-shadow: none; /* Remove shadow for small screens */
+    box-shadow: none;
   }
 
   .orders-table th,
   .orders-table td {
-    font-size: 12px; /* Further reduce font size for small screens */
+    font-size: 12px;
     padding: 6px;
   }
 
-  .recent-orders h2 {
+  .recent-orders h2,
+  .delivery-heading h2 {
     font-size: 18px;
   }
 }
