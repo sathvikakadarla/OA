@@ -14,6 +14,7 @@ const Cart = () => {
   const [filteredFoodItems, setFilteredFoodItems] = useState([]);
   const [selectedFoodItem, setSelectedFoodItem] = useState('');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [cartFetched, setCartFetched] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -70,6 +71,7 @@ const Cart = () => {
         body: JSON.stringify({ mobileOrEmail: mobileNumber }),
       });
       const data = await res.json();
+      setCartFetched(true);
       if (res.ok) {
         setCartItems(data.cart.items || []);
         toast.success('Cart fetched');
@@ -78,6 +80,7 @@ const Cart = () => {
         toast.error(data.message || 'No cart');
       }
     } catch {
+      setCartFetched(true);
       toast.error('Error fetching cart');
     }
   };
@@ -125,25 +128,24 @@ const Cart = () => {
     }
   };
 
-const handleDeleteItem = async (item) => {
-  try {
-    const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      toast.success('Removed from cart');
-      fetchCart();
-    } else {
-      toast.error(data.message || 'Failed to remove');
+  const handleDeleteItem = async (item) => {
+    try {
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success('Removed from cart');
+        fetchCart();
+      } else {
+        toast.error(data.message || 'Failed to remove');
+      }
+    } catch {
+      toast.error('Error removing item');
     }
-  } catch {
-    toast.error('Error removing item');
-  }
-};
-
+  };
 
   const handleDropdownAdd = () => {
     if (!selectedFoodItem || selectedQuantity <= 0) {
@@ -191,7 +193,7 @@ const handleDeleteItem = async (item) => {
             )}
           </div>
 
-          {/* Middle Panel - Only show if userProfile is available */}
+          {/* Middle Panel - Food Dropdown */}
           {userProfile && (
             <div className="middle-panel">
               <div className="dropdown-selection">
@@ -241,14 +243,14 @@ const handleDeleteItem = async (item) => {
 
                     {selectedProduct && (
                       <div className="dropdown-group">
-                        <label>Quantity (Multiplier × {selectedProduct.quantity}g)</label>
+                        <label>Quantity (× {selectedProduct.quantity}g)</label>
                         <input
                           type="number"
                           min="1"
                           value={selectedQuantity}
                           onChange={(e) => setSelectedQuantity(Number(e.target.value))}
                         />
-                        <small>(Available: {selectedProduct.quantity || 0}g per unit)</small>
+                        <small>(Per Unit: {selectedProduct.quantity || 0}g)</small>
                         <div><strong>Total: ₹{selectedProduct.price * selectedQuantity}</strong></div>
                       </div>
                     )}
@@ -263,47 +265,59 @@ const handleDeleteItem = async (item) => {
 
         {/* Right Panel - Cart */}
         <div className="right-panel">
-          {cartItems.length > 0 && (
-            <div className="cart-table">
-              <h3>Cart Items</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Shop</th>
-                    <th>Total Qty</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartItems.map((item) => {
-                    const product = item.productId;
-                    const unitQty = product?.quantity || 1000;
-                    const unitPrice = product?.price || 0;
-                    const selectedQty = item.quantity || 0;
-                    const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
+          {cartFetched ? (
+            cartItems.length > 0 ? (
+              <div className="cart-table">
+                <h3>Cart Items</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Shop</th>
+                      <th>Total Qty</th>
+                      <th>Price</th>
+                      <th>Total</th>
+                      <th>Edit</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+  {cartItems.map((item) => {
+    const product = item.productId;
+    const quantityInUnit = item.quantityInUnit || 0;
+    const quantityInGrams = item.quantityInGrams || 0;
+    const unitQty = product?.quantity || 1000; // g per unit
+    const unitPrice = product?.price || 0;
+    const totalPrice = quantityInUnit * unitPrice;
 
-                    return (
-                      <tr key={item._id}>
-                        <td>{product?.name}</td>
-                        <td>{product?.description}</td>
-                        <td>{product?.category}</td>
-                        <td>{product?.shopId?.name || 'N/A'}</td>
-                        <td>{selectedQty}g</td>
-                        <td>₹{unitPrice} (for {unitQty}g)</td>
-                        <td>₹{totalPrice}</td>
-                        <td><button onClick={() => handleEditItem(item)}>Edit</button></td>
-                        <td><button onClick={() => handleDeleteItem(item)}>Delete</button></td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+    return (
+      <tr key={item._id}>
+        <td>{product?.name}</td>
+        <td>{product?.description}</td>
+        <td>{product?.category}</td>
+        <td>{product?.shopId?.name || 'N/A'}</td>
+        <td>{quantityInUnit} unit(s) = {quantityInGrams}g</td>
+        <td>₹{unitPrice} (per {unitQty}g)</td>
+        <td>₹{totalPrice}</td>
+        <td><button onClick={() => handleEditItem(item)}>Edit</button></td>
+        <td><button onClick={() => handleDeleteItem(item)}>Delete</button></td>
+      </tr>
+    );
+  })}
+</tbody>
+
+                </table>
+              </div>
+            ) : (
+              <div className="empty-cart">
+                <p>Your cart is empty 🛒</p>
+              </div>
+            )
+          ) : (
+            <div className="empty-cart">
+              <p>Cart not loaded yet. Click <strong>View Cart</strong> after entering number.</p>
             </div>
           )}
         </div>
