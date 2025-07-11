@@ -1,4 +1,4 @@
-import noveglogo from './noveglogo.jpg';
+import noveglogo from './NoVEGLogoFinal.png';
 import order from './order.png';
 import assigned from './assigned.png';
 import orderCompleted from './complete.png';
