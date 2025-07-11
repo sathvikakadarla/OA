@@ -17,7 +17,7 @@ const Cart = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:2000/api/food/categories')
+    fetch('https://oa-backend-qdbq.onrender.com/api/food/categories')
       .then((res) => res.json())
       .then((data) => setCategories(data.categories || []))
       .catch(() => toast.error('Failed to load categories'));
@@ -25,7 +25,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!selectedCategory) return;
-    fetch(`http://localhost:2000/api/food/shops/by-category?category=${selectedCategory}`)
+    fetch(`https://oa-backend-qdbq.onrender.com/api/food/shops/by-category?category=${selectedCategory}`)
       .then((res) => res.json())
       .then((data) => setShops(data.shops || []))
       .catch(() => toast.error('Failed to load shops'));
@@ -33,7 +33,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!selectedCategory || !selectedShop) return;
-    fetch(`http://localhost:2000/api/food/list?category=${selectedCategory}&shopId=${selectedShop}`)
+    fetch(`https://oa-backend-qdbq.onrender.com/api/food/list?category=${selectedCategory}&shopId=${selectedShop}`)
       .then((res) => res.json())
       .then((data) => setFilteredFoodItems(data.foodItems || []))
       .catch(() => toast.error('Failed to load food items'));
@@ -46,7 +46,7 @@ const Cart = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`http://localhost:2000/api/profile/${mobileNumber}`);
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/profile/${mobileNumber}`);
       const data = await res.json();
       if (res.ok) {
         setUserProfile(data);
@@ -64,7 +64,7 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch(`http://localhost:2000/api/cart/get`, {
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/get`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobileOrEmail: mobileNumber }),
@@ -86,7 +86,7 @@ const Cart = () => {
     if (!userProfile) return toast.error('Load user profile first');
 
     try {
-      const res = await fetch(`http://localhost:2000/api/cart/add`, {
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -113,7 +113,7 @@ const Cart = () => {
     if (isNaN(quantityNum) || quantityNum <= 0) return toast.error('Invalid quantity');
 
     try {
-      await fetch(`http://localhost:2000/api/cart/remove`, {
+      await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
@@ -127,7 +127,7 @@ const Cart = () => {
 
 const handleDeleteItem = async (item) => {
   try {
-    const res = await fetch(`http://localhost:2000/api/cart/remove`, {
+    const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
