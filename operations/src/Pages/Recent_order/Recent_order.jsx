@@ -18,6 +18,11 @@ const Recentorders = () => {
         </thead>
       </table>
     </div>
+      <div className="delivery-container">
+        <div className="delivery-heading">
+        <h2>Delivery Partner</h2>
+        </div>
+      </div>
     </div>
     )
 }
