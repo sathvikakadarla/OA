@@ -33,9 +33,7 @@ function App() {
             <Login onClose={() => setShowLogin(false)} />
           </div>
         )}
-        
-        
-
+    
         <main>
           <Routes>
             {/* Main Pages */}
