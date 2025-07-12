@@ -1,5 +1,5 @@
 import React from "react";
-import './Recent_order.css'
+import './Recent_order.css';
 
 const Recentorders = () => {
     return (import React from "react";
