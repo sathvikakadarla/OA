@@ -1,34 +1,50 @@
-/* Navbar.css */
-
+/* Container */
 .navbar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  height:120px;
+  flex-wrap: wrap;
   background-color: #ffffff;
   padding: 12px 20px;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
 }
 
-.logo-img {
+/* Logo */
+.navbar-logo .logo-img {
   height: 40px;
+  flex-shrink: 0;
 }
 
+/* Home button (optional) */
+.home-div button {
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Center title */
 .navbar-links {
-  font-size: 30px;
+  flex: 1;
+  text-align: center;
+  font-size: 24px;
   font-weight: 600;
   color: #222;
 }
 
+/* Right-side buttons */
 .navbar-button {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
+/* Profile image and logout */
 .profile-logout-container {
   display: flex;
   align-items: center;
@@ -42,6 +58,7 @@
   cursor: pointer;
 }
 
+/* Login/Logout buttons */
 .logout-button,
 .login-button {
   background-color: #ff4d1c;
@@ -52,9 +69,40 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 15px;
 }
 
 .logout-button:hover,
 .login-button:hover {
   background-color: #e54313;
+}
+
+/* Responsive: Small screens */
+@media (max-width: 768px) {
+  .navbar-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .navbar-links {
+    order: 2;
+    font-size: 20px;
+  }
+
+  .navbar-logo {
+    order: 1;
+  }
+
+  .navbar-button {
+    order: 3;
+    justify-content: center;
+  }
+
+  .home-div {
+    order: 4;
+    margin-top: 10px;
+    
+  }
 }
