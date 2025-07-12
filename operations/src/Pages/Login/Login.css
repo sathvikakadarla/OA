@@ -1,105 +1,161 @@
+/* Reset & layout */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Fullscreen dark background with blur when popup is active */
+.login-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px; /* Ensures spacing on small screens */
+}
+
+/* Login popup box */
 .wrapper {
-    width: 400px;
-    background: rgb(239, 103, 126);
-    color: white;
-    border-radius: 10px;
-    padding: 30px 40px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-top: 50px; 
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  background: rgb(239, 103, 126);
+  color: white;
+  border-radius: 10px;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Heading */
 .wrapper h1 {
-    font-size: 36px;
-    text-align: center;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
+/* Input box styling */
 .wrapper .input-box {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    margin: 8px 0; 
-    padding: 10px;
+  position: relative;
+  width: 100%;
+  margin: 8px 0;
 }
 
 .input-box input {
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
-    outline: none;
-    border-radius: 40px;
-    font-size: 16px;
-    color: white;
-    padding: 20px 25px 20px 20px;
+  width: 100%;
+  height: 48px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: white;
+  padding: 0 20px;
+  outline: none;
 }
 
 .input-box input::placeholder {
-    color: white;
+  color: white;
 }
 
 .input-box .icon {
-    position: absolute;
-    right: 20px;
-    top: 60%; 
-    transform: translateY(-50%);
-    font-size: 16px;
-    cursor: pointer; 
-    color: white;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
 }
 
+/* Login button */
 .wrapper button {
-    width: 100%;
-    height: 45px;
-    background: white;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    font-weight: 700;
-    transition: background-color 0.3s;
+  width: 100%;
+  height: 45px;
+  background: white;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.3s;
 }
 
 .wrapper button:hover {
-    background-color: #f0f0f0;  /* Light hover effect */
+  background-color: #f0f0f0;
 }
 
+/* Submit label/text */
 .submit {
-    color: white;
-    margin-top: 15px;
+  color: white;
+  margin-top: 15px;
 }
 
+/* Close (X) button */
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
 }
 
+/* Optional: Dashboard */
 .dashboard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f7fc;
-    color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7fc;
+  color: #333;
 }
 
 .dashboard h1 {
-    font-size: 48px;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+/* ----------------------------------- */
+/* RESPONSIVENESS */
+/* ----------------------------------- */
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 20px 24px;
+  }
+
+  .wrapper h1 {
+    font-size: 1.6rem;
+  }
+
+  .input-box input {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .wrapper button {
+    font-size: 14px;
+    height: 42px;
+  }
+
+  .close-btn {
+    font-size: 18px;
+    top: 10px;
+    right: 12px;
+  }
+
+  .dashboard h1 {
+    font-size: 2rem;
+  }
 }
