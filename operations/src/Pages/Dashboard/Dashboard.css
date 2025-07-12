@@ -1,131 +1,234 @@
 /* Reset CSS */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Dashboard container */
+/* Dashboard Container */
 .dashboard-container {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  padding: 80px 30px 0 30px;
+  min-height: 100px;
+  margin-bottom: 300px;
+  width: 100%;
+}
+
+/* Shared Row Styles */
+.first-row,
+.second-row,
+.third-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.third-row {
+  justify-content: flex-start;
+}
+
+/* Shared Box Styles */
+.orders,
+.assigned,
+.order-completed,
+.pending,
+.admin-cancellation,
+.user-cancellation,
+.upcoming-order,
+.vendor-management,
+.credit-to-wallet,
+.cart {
+  flex: 1 1 calc(25% - 30px); /* Responsive 4-column layout */
+  max-width: calc(25% - 30px);
+  min-width: 250px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  color: white;
+  text-decoration: none;
+}
+
+/* Responsive Image inside card */
+.orders img,
+.assigned img,
+.order-completed img,
+.pending img,
+.admin-cancellation img,
+.user-cancellation img,
+.upcoming-order img,
+.vendor-management img,
+.credit-to-wallet img,
+.cart img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Headings */
+.orders h2,
+.assigned h2,
+.order-completed h2,
+.pending h2,
+.admin-cancellation h2,
+.user-cancellation h2,
+.upcoming-order h2,
+.vendor-management h2,
+.credit-to-wallet h2,
+.cart h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 10px;
+  flex: 1;
+  text-align: left;
+}
+
+/* Background Colors */
+.orders { background-color: #ff6f61; }
+.assigned { background-color: #7c59ad; }
+.order-completed { background-color: #4bda50; }
+.pending { background-color: #ff9800; }
+.admin-cancellation { background-color: #ff5722; }
+.user-cancellation { background-color: #3f51b5; }
+.upcoming-order { background-color: #8bc34a; }
+.vendor-management { background-color: #2196f3; }
+.credit-to-wallet { background-color: indianred; }
+.cart { background-color: aqua; }
+
+/* Hover Effect */
+.orders:hover,
+.assigned:hover,
+.order-completed:hover,
+.pending:hover,
+.admin-cancellation:hover,
+.user-cancellation:hover,
+.upcoming-order:hover,
+.vendor-management:hover,
+.credit-to-wallet:hover,
+.cart:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.recent-orders {
+  background-color: #8fc6ee;
+  border-radius: 12px;
+  padding: 10px;
+  flex: 1 1 calc(23% - 20px); /* Matches other cards */
+  max-width: calc(23% - 20px);
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: white;
+  overflow: hidden;
+}
+
+.recent-orders h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Make table scroll inside card (if content overflows) */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  overflow-x: auto;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.orders-table th {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+/* Responsive Layout Adjustments */
+
+/* Tablets (2 columns) */
+@media (max-width: 992px) {
+  .orders,
+  .assigned,
+  .order-completed,
+  .pending,
+  .admin-cancellation,
+  .user-cancellation,
+  .upcoming-order,
+  .vendor-management,
+  .credit-to-wallet,
+  .cart {
+    flex: 1 1 calc(48% - 20px);
+    max-width: calc(48% - 20px);
+  }
+}
+
+/* Phones (1 column) */
+@media (max-width: 600px) {
+  .first-row,
+  .second-row,
+  .third-row {
     flex-direction: column;
-    padding-top: 80px;
-    padding-left: 30px; /* Add left padding */
-    padding-right: 30px; /* Add right padding */
-    min-height: 100px;
-    margin-bottom: 300px;
-}
-
-
-/* Rows in Dashboard */
-.first-row, .second-row, .third-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 1300px;
-    margin-top: 30px;
-}
-.third-row{
-    justify-content:flex-start;
-}
-
-
-
-/* Section for individual items */
-.orders, .assigned, .order-completed, .pending,
-.admin-cancellation, .user-cancellation, .upcoming-order, .vendor-management, .credit-to-wallet, .cart {
-    width: 23%; /* Ensure consistent width */
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 30px;
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: flex-start; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    position: relative;
-    transition: all 0.3s ease-in-out;
-    /* Removed fixed height */
-}
+  }
 
-/* Images for each section */
-.orders img, .assigned img, .order-completed img, .pending img,
-.admin-cancellation img, .user-cancellation img, .upcoming-order img, .credit-to-wallet img , .cart img{
-    width: 40px;
-    height: 40px;
-    position: absolute; 
-    right: 20px;
-}
+  .orders,
+  .assigned,
+  .order-completed,
+  .pending,
+  .admin-cancellation,
+  .user-cancellation,
+  .upcoming-order,
+  .vendor-management,
+  .credit-to-wallet,
+  .cart {
+    width: 100%;
+    max-width: 100%;
+  }
 
-/* Heading styles */
-h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
-    text-align: left; 
-    margin-right: 50px; 
-}
+  .orders h2,
+  .assigned h2,
+  .order-completed h2,
+  .pending h2,
+  .admin-cancellation h2,
+  .user-cancellation h2,
+  .upcoming-order h2,
+  .vendor-management h2,
+  .credit-to-wallet h2,
+  .cart h2 {
+    font-size: 16px;
+  }
 
-/* Background colors for different sections */
-.orders {
-    background-color: #ff6f61;
-}
-
-.assigned {
-    background-color: #7c59ad;
-}
-
-.order-completed {
-    background-color: #4bda50;
-}
-
-.pending {
-    background-color: #ff9800;
-}
-
-.admin-cancellation {
-    background-color: #ff5722; 
-}
-
-.user-cancellation {
-    background-color: #3f51b5;
-}
-
-.upcoming-order {
-    background-color: #8bc34a; 
-}
-
-.vendor-management {
-    background-color: #2196f3;
-}
-.cart{
-    background-color: aqua;
-}
-
-/* Fix for Credit to Wallet Background */
-.credit-to-wallet {
-    background-color: indianred; /* Choose your preferred color */
-}
-
-/* Hover effect for sections */
-.orders:hover, .assigned:hover, .order-completed:hover, .pending:hover,
-.admin-cancellation:hover, .user-cancellation:hover, .upcoming-order:hover, .vendor-management:hover, .credit-to-wallet:hover, .cart:hover {
-    transform: translateY(-8px); 
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); 
-}
-
-/* Responsive design for mobile devices */
-@media (max-width: 768px) {
-    .first-row, .second-row, .third-row {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .orders, .assigned, .order-completed, .pending,
-    .admin-cancellation, .user-cancellation, .upcoming-order, .vendor-management, .credit-to-wallet {
-        width: 90%; 
-        height: auto; /* Let height adjust based on content */
-    }
+  .orders img,
+  .assigned img,
+  .order-completed img,
+  .pending img,
+  .admin-cancellation img,
+  .user-cancellation img,
+  .upcoming-order img,
+  .vendor-management img,
+  .credit-to-wallet img,
+  .cart img {
+    width: 36px;
+    height: 36px;
+  }
 }
