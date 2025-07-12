@@ -14,11 +14,10 @@ const Cart = () => {
   const [filteredFoodItems, setFilteredFoodItems] = useState([]);
   const [selectedFoodItem, setSelectedFoodItem] = useState('');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [cartFetched, setCartFetched] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('https://oa-backend-qdbq.onrender.com/api/food/categories')
+    fetch('http://localhost:2000/api/food/categories')
       .then((res) => res.json())
       .then((data) => setCategories(data.categories || []))
       .catch(() => toast.error('Failed to load categories'));
@@ -26,7 +25,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!selectedCategory) return;
-    fetch(`https://oa-backend-qdbq.onrender.com/api/food/shops/by-category?category=${selectedCategory}`)
+    fetch(`http://localhost:2000/api/food/shops/by-category?category=${selectedCategory}`)
       .then((res) => res.json())
       .then((data) => setShops(data.shops || []))
       .catch(() => toast.error('Failed to load shops'));
@@ -34,7 +33,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!selectedCategory || !selectedShop) return;
-    fetch(`https://oa-backend-qdbq.onrender.com/api/food/list?category=${selectedCategory}&shopId=${selectedShop}`)
+    fetch(`http://localhost:2000/api/food/list?category=${selectedCategory}&shopId=${selectedShop}`)
       .then((res) => res.json())
       .then((data) => setFilteredFoodItems(data.foodItems || []))
       .catch(() => toast.error('Failed to load food items'));
@@ -47,7 +46,7 @@ const Cart = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/profile/${mobileNumber}`);
+      const res = await fetch(`http://localhost:2000/api/profile/${mobileNumber}`);
       const data = await res.json();
       if (res.ok) {
         setUserProfile(data);
@@ -65,13 +64,12 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/get`, {
+      const res = await fetch(`http://localhost:2000/api/cart/get`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobileOrEmail: mobileNumber }),
       });
       const data = await res.json();
-      setCartFetched(true);
       if (res.ok) {
         setCartItems(data.cart.items || []);
         toast.success('Cart fetched');
@@ -80,7 +78,6 @@ const Cart = () => {
         toast.error(data.message || 'No cart');
       }
     } catch {
-      setCartFetched(true);
       toast.error('Error fetching cart');
     }
   };
@@ -89,7 +86,7 @@ const Cart = () => {
     if (!userProfile) return toast.error('Load user profile first');
 
     try {
-      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/add`, {
+      const res = await fetch(`http://localhost:2000/api/cart/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -116,7 +113,7 @@ const Cart = () => {
     if (isNaN(quantityNum) || quantityNum <= 0) return toast.error('Invalid quantity');
 
     try {
-      await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
+      await fetch(`http://localhost:2000/api/cart/remove`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
@@ -128,24 +125,25 @@ const Cart = () => {
     }
   };
 
-  const handleDeleteItem = async (item) => {
-    try {
-      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        toast.success('Removed from cart');
-        fetchCart();
-      } else {
-        toast.error(data.message || 'Failed to remove');
-      }
-    } catch {
-      toast.error('Error removing item');
+const handleDeleteItem = async (item) => {
+  try {
+    const res = await fetch(`http://localhost:2000/api/cart/remove`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      toast.success('Removed from cart');
+      fetchCart();
+    } else {
+      toast.error(data.message || 'Failed to remove');
     }
-  };
+  } catch {
+    toast.error('Error removing item');
+  }
+};
+
 
   const handleDropdownAdd = () => {
     if (!selectedFoodItem || selectedQuantity <= 0) {
@@ -193,7 +191,7 @@ const Cart = () => {
             )}
           </div>
 
-          {/* Middle Panel - Food Dropdown */}
+          {/* Middle Panel - Only show if userProfile is available */}
           {userProfile && (
             <div className="middle-panel">
               <div className="dropdown-selection">
@@ -243,14 +241,14 @@ const Cart = () => {
 
                     {selectedProduct && (
                       <div className="dropdown-group">
-                        <label>Quantity (× {selectedProduct.quantity}g)</label>
+                        <label>Quantity (Multiplier × {selectedProduct.quantity}g)</label>
                         <input
                           type="number"
                           min="1"
                           value={selectedQuantity}
                           onChange={(e) => setSelectedQuantity(Number(e.target.value))}
                         />
-                        <small>(Per Unit: {selectedProduct.quantity || 0}g)</small>
+                        <small>(Available: {selectedProduct.quantity || 0}g per unit)</small>
                         <div><strong>Total: ₹{selectedProduct.price * selectedQuantity}</strong></div>
                       </div>
                     )}
@@ -263,70 +261,90 @@ const Cart = () => {
           )}
         </div>
 
-        {/* Right Panel - Cart */}
         <div className="right-panel">
-          {cartFetched ? (
-            cartItems.length > 0 ? (
-              <div className="cart-table">
-                <h3>Cart Items</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Category</th>
-                      <th>Shop</th>
-                      <th>Total Qty</th>
-                      <th>Price</th>
-                      <th>Total</th>
-                      <th>Edit</th>
-                      <th>Remove</th>
-                    </tr>
-                  </thead>
-                 <tbody>
-  {cartItems.map((item) => {
-    const product = item.productId;
-    const quantityInUnit = item.quantityInUnit || 0;
-    const quantityInGrams = item.quantityInGrams || 0;
-    const unitQty = product?.quantity || 1000; // g per unit
-    const unitPrice = product?.price || 0;
-    const totalPrice = quantityInUnit * unitPrice;
 
-    return (
-      <tr key={item._id}>
-        <td>{product?.name}</td>
-        <td>{product?.description}</td>
-        <td>{product?.category}</td>
-        <td>{product?.shopId?.name || 'N/A'}</td>
-        <td>{quantityInUnit} unit(s) = {quantityInGrams}g</td>
-        <td>₹{unitPrice} (per {unitQty}g)</td>
-        <td>₹{totalPrice}</td>
-        <td><button onClick={() => handleEditItem(item)}>Edit</button></td>
-        <td><button onClick={() => handleDeleteItem(item)}>Delete</button></td>
-      </tr>
-    );
-  })}
-</tbody>
+  {/* Table view for larger screens */}
+  {cartItems.length > 0 && (
+    <div className="cart-table desktop-view">
+      <h3>Cart Items</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Shop</th>
+            <th>Total Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Edit</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cartItems.map((item) => {
+            const product = item.productId;
+            const unitQty = product?.quantity || 1000;
+            const unitPrice = product?.price || 0;
+            const selectedQty = item.quantity || 0;
+            const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
 
-                </table>
-              </div>
-            ) : (
-              <div className="empty-cart">
-                <p>Your cart is empty 🛒</p>
-              </div>
-            )
-          ) : (
-            <div className="empty-cart">
-              <p>Cart not loaded yet. Click <strong>View Cart</strong> after entering number.</p>
-            </div>
-          )}
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-        <ToastContainer />
-      </div>
+            return (
+              <tr key={item._id}>
+                <td>{product?.name}</td>
+                <td>{product?.description}</td>
+                <td>{product?.category}</td>
+                <td>{product?.shopId?.name || 'N/A'}</td>
+                <td>{selectedQty}g</td>
+                <td>₹{unitPrice} (for {unitQty}g)</td>
+                <td>₹{totalPrice}</td>
+                <td><button onClick={() => handleEditItem(item)}>Edit</button></td>
+                <td><button onClick={() => handleDeleteItem(item)}>Delete</button></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
-  );
-};
+  )}
+
+  {/* Card view for mobile screens */}
+  {cartItems.length > 0 && (
+    <div className="cart-cards mobile-view">
+      <h3>Cart Items</h3>
+      {cartItems.map((item) => {
+        const product = item.productId;
+        const unitQty = product?.quantity || 1000;
+        const unitPrice = product?.price || 0;
+        const selectedQty = item.quantity || 0;
+        const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
+
+        return (
+          <div className="cart-card" key={item._id}>
+            <p><strong>Name:</strong> {product?.name}</p>
+            <p><strong>Description:</strong> {product?.description}</p>
+            <p><strong>Category:</strong> {product?.category}</p>
+            <p><strong>Shop:</strong> {product?.shopId?.name || 'N/A'}</p>
+            <p><strong>Quantity:</strong> {selectedQty}g</p>
+            <p><strong>Price:</strong> ₹{unitPrice} (for {unitQty}g)</p>
+            <p><strong>Total:</strong> ₹{totalPrice}</p>
+            <div className="card-buttons">
+              <button onClick={() => handleEditItem(item)}>Edit</button>
+              <button onClick={() => handleDeleteItem(item)}>Delete</button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+
+</div>
+
+{error && <div className="error-message">{error}</div>}
+<ToastContainer />
+</div>
+</div>
+);
+}
 
 export default Cart;
