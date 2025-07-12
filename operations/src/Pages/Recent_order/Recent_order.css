@@ -1,25 +1,27 @@
 /* ========== ORDER CONTAINER ========== */
 .order-container {
-  width: 100%;                    /* 90% of screen width */
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: stretch;          /* Equal height children */
-  padding: 5px;
+  align-items: stretch;
+  padding: 10px 20px;
   gap: 20px;
-  background-color: rgb(255, 255, 255);
-  flex-wrap: nowrap;             /* Prevent wrapping unless forced */
+  background-color: #ffffff;
+  flex-wrap: nowrap;
   box-sizing: border-box;
 }
 
 /* ========== RECENT ORDERS BOX ========== */
 .recent-orders {
-  flex: 0 1 70%;                 /* Approx 70% width */
+  flex: 1 1 70%;
+  max-width: 70%;
   background: #8fc6ee;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Prevent overflow on small screens */
   box-sizing: border-box;
 }
 
@@ -34,6 +36,7 @@
 /* ========== ORDERS TABLE ========== */
 .orders-table {
   width: 100%;
+  min-width: 600px; /* Helps ensure proper spacing */
   border-collapse: collapse;
 }
 
@@ -41,17 +44,21 @@
 .orders-table td {
   padding: 10px;
   border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 15px;
 }
 
 .orders-table th {
   font-weight: bold;
   text-transform: uppercase;
   border-bottom: 1px solid #ddd;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* ========== DELIVERY CONTAINER ========== */
 .delivery-container {
-  flex: 0 1 30%;                 /* Approx 30% width */
+  flex: 1 1 30%;
+  max-width: 30%;
   background-color: #ed6da0;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -74,16 +81,18 @@
 
 /* ========== RESPONSIVE STYLES ========== */
 
-/* Tablets and below: only stack if really needed */
+/* Tablets (≤ 768px) */
 @media (max-width: 768px) {
   .order-container {
-    flex-wrap: wrap;            /* Allow wrapping if needed */
+    flex-wrap: wrap;
+    flex-direction: column;
   }
 
   .recent-orders,
   .delivery-container {
-    flex: 1 1 100%;             /* Take full width when stacked */
+    flex: 1 1 100%;
     max-width: 100%;
+    padding: 16px;
   }
 
   .orders-table th,
@@ -91,20 +100,30 @@
     padding: 8px;
     font-size: 14px;
   }
+
+  .recent-orders h2,
+  .delivery-heading h2 {
+    font-size: 20px;
+  }
 }
 
-/* Phones */
+/* Phones (≤ 480px) */
 @media (max-width: 480px) {
   .recent-orders,
   .delivery-container {
-    padding: 10px;
+    padding: 12px;
     box-shadow: none;
   }
 
   .orders-table th,
   .orders-table td {
-    font-size: 12px;
+    font-size: 13px;
     padding: 6px;
+  }
+
+  .orders-table {
+    display: block;
+    overflow-x: auto;
   }
 
   .recent-orders h2,
