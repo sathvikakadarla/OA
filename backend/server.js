@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/api', userRoutes);
-app.use('/api/orders', orderRoutes);
+app.use('/api/order', orderRoutes);
 app.use('/api/orders', ongoingordersRoutes);
 app.use('/api/orders', customeredit);
 app.use('/api/history', historyRoutes);
