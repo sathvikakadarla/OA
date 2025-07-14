@@ -1,0 +1,88 @@
+/* Container Styling */
+.history-wallet-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fefefe;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.history-wallet-container h2 {
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* Table Container */
+.history-container {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table-scroll-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Table Styling */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
+  word-wrap: break-word;
+  text-align: left;
+}
+
+.history-table th {
+  background-color: #2c3e50;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-weight: 600;
+}
+
+.history-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.history-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .credit-to-wallet-container {
+    padding: 15px;
+  }
+
+  .history-table {
+    font-size: 12px;
+    min-width: unset;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 8px;
+  }
+
+  .table-scroll-wrapper {
+    max-height: 300px;
+  }
+}
