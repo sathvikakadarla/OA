@@ -119,9 +119,10 @@ const CreditToWallet = () => {
         <button onClick={() => navigate('/history')}>View History</button>
       </div>
 
-      <div className='credit-to-wallet-container'>
-        <div className='credit-to-wallet-inner-container'>
-          <div className='input-section left'>
+      <div className="credit-to-wallet-container">
+        <div className="credit-to-wallet-inner-container">
+          {/* Mobile number input */}
+          <div className="input-section left">
             <label htmlFor="mobile-number">Mobile Number</label>
             <input
               type="text"
@@ -133,41 +134,48 @@ const CreditToWallet = () => {
             />
           </div>
 
-          <div className='input-section right'>
-            <label htmlFor="amount">Amount</label>
-            <input
-              type="number"
-              id="amount"
-              placeholder="Enter amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
+          {/* Fetch profile button */}
+          <div className="submit-button">
+            <button onClick={handleSubmit}>Fetch Profile</button>
           </div>
 
+          {/* Profile details and money input shown only after fetching */}
           {userProfile && (
-            <div className="profile-details">
-              <h3>User Profile</h3>
-              <p><strong>Name:</strong> {userProfile.name}</p>
-              <p><strong>Email:</strong> {userProfile.email}</p>
-              <p><strong>Mobile Number:</strong> {userProfile.mobileNumber}</p>
-              <p><strong>Profile ID:</strong> {userProfile._id}</p>
-              <p><strong>Wallet Balance:</strong> ₹{userProfile.currentBalance}</p>
-            </div>
-          )}
+            <>
+              <div className="profile-details">
+                <h3>User Profile</h3>
+                <p><strong>Name:</strong> {userProfile.name}</p>
+                <p><strong>Email:</strong> {userProfile.email}</p>
+                <p><strong>Mobile Number:</strong> {userProfile.mobileNumber}</p>
+                <p><strong>Profile ID:</strong> {userProfile._id}</p>
+                <p><strong>Wallet Balance:</strong> ₹{userProfile.currentBalance}</p>
+              </div>
+              
+              <div className="input-section right">
+                <label htmlFor="amount">Amount</label>
+                <input
+                  type="number"
+                  id="amount"
+                  placeholder="Enter amount"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </div>
 
-          {error && <div className="error-message">{error}</div>}
-
-          <div className='submit-button'>
-            <button onClick={handleSubmit}>Fetch Profile</button>
-            {userProfile && (
-              <>
+              <div className="submit-button">
                 <button onClick={handleAddMoney}>Add Money</button>
-                <button onClick={handleResetBalance} style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white' }}>
+                <button
+                  onClick={handleResetBalance}
+                  style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white' }}
+                >
                   Reset Balance
                 </button>
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
+
+          {/* Error message */}
+          {error && <div className="error-message">{error}</div>}
         </div>
 
         <ToastContainer />
