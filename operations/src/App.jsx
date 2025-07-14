@@ -12,7 +12,7 @@ import CreditToWallet from './Pages/CreditToWallet/CreditToWallet.jsx';
 // import UserCancellation from './Pages/User_cancellation/User_cancellation.jsx';
 // import UpcomingOrder from './Pages/Upcoming_order/Upcoming_order.jsx';
 import VendorManagement from './Pages/Vendor_management/Vendor_management.jsx';
-import History from './Pages/CreditToWallet/History.jsx';
+import History from './Pages/History/History.jsx';
 import Home from './Pages/Home/Home.jsx';
 import { AuthProvider } from './Pages/AuthContext/AuthContext';
 import './App.css';
