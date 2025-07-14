@@ -1,186 +1,84 @@
-/* Modal styles */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-in-out; /* Fade-in animation */
+/* Container must be relative for absolute children */
+.order-delivered-container {
+    position: relative;
+    padding: 20px;
 }
 
+/* Back button (↩️) */
+.left-arrow-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+
+.left-arrow-button:hover {
+    background-color: #2874a6;
+}
+
+
+/* Filter Dropdown */
 .filter-container {
-    margin-bottom: 1rem;
-    position: absolute; /* Use absolute positioning */
-    top: 6rem; /* Adjust to be below the navigation bar */
-    left: 15rem; /* Align it to the left of the table */
-    z-index: 1000; /* Ensure it appears above other content */
+    position: absolute;
+    top: 80px;
+    left: 160px;
+    z-index: 10;
 }
 
 .dropdown-toggle {
     padding: 0.5rem 1rem;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
+    color: #333;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    border-radius: 5px; /* Add rounded corners for a polished look */
+    border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 2.5rem; /* Ensure dropdown aligns well below the toggle */
+    top: 2.5rem;
     left: 0;
-    list-style: none;
     background: white;
-    border: 1px solid #ddd;
-    padding: 0;
-    margin: 0;
+    border: 1px solid #050505;
     width: 200px;
     z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px; /* Rounded corners for the dropdown */
 }
 
 .dropdown-menu li {
     padding: 0.5rem 1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    color: #333;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .dropdown-menu li:hover {
-    background-color: #f0f0f0;
+    background-color: #000;
+    color: #bdbdbd;
 }
 
-
-.modal-content {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
-    position: relative;
-    animation: slideUp 0.4s ease-in-out; /* Smooth slide-up animation */
-    text-align: left; /* Align text to the left */
-}
-
-.close-button {
-    background-color: transparent;
-    border: none;
-    font-size: 22px;
-    font-weight: bold;
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    cursor: pointer;
-    color: #333; /* Subtle dark gray */
-    transition: color 0.3s ease;
-}
-
-.close-button:hover {
-    color: #e74c3c; /* Bright red on hover */
-}
-
-.modal-content h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
-    color: #2c3e50; /* Dark blue-gray */
-    border-bottom: 2px solid #3498db; /* Accent underline */
-    padding-bottom: 10px;
-}
-
-.modal-content p {
-    font-size: 16px;
-    margin-bottom: 12px;
-    color: #555;
-    line-height: 1.6;
-}
-
-.modal-content ul {
-    list-style: disc inside;
-    padding-left: 0; /* Add space for bullet points */
-    margin-top: 15px;
-}
-
-.modal-content ul li {
-    font-size: 15px;
-    margin-bottom: 8px;
-    color: #333; /* Slightly darker text for better visibility */
-}
-
-.modal-content h3 {
-    margin-top: 25px;
-    font-size: 18px;
-    color: #2c3e50;
-    border-bottom: 1px solid #ddd; /* Subtle divider for sections */
-    padding-bottom: 5px;
-}
-
-.modal-content .details-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.modal-content .details-row p {
-    margin: 0;
-    font-size: 16px;
-    color: #555;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        background-color: rgba(0, 0, 0, 0);
-    }
-    to {
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* General page styles */
-.left-arrow-button, .back-button {
-    padding: 10px 16px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #3498db;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    position: fixed;
-    top: 150px;
-    left: 35px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
-
-.left-arrow-button:hover, .back-button:hover {
-    background-color: #2874a6;
-}
-
+/* Order Table */
 .order-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 110px;
-    background-color: #ffffff;
+    margin-top: 150px;
+    background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -194,13 +92,16 @@
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    border: 2px solid #000;
+    font-weight: bold;
 }
 
 .order-table td {
     padding: 16px;
     font-size: 14px;
     color: #555;
-    border-bottom: 1px solid #ddd;
+    border: 2px solid #000;
+    font-weight: bold;
 }
 
 .order-table tr:hover {
@@ -211,15 +112,28 @@
     color: #3498db;
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .order-id-link:hover {
     color: #2874a6;
     text-decoration: underline;
 }
+.map_icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
+.map_icon:hover {
+  transform: scale(1.1);
+}
+
+
+/* Customer Address */
 .customer-details {
     display: flex;
     align-items: center;
@@ -232,16 +146,6 @@
     color: #333;
 }
 
-.location-container {
-    display: flex;
-    justify-content: space-between; /* Pushes text and symbol to opposite ends */
-    align-items: center; /* Vertically aligns the content */
-    width: 100%; /* Ensures it fills the available space */
-    padding: 8px 12px; /* Adds some padding inside the container */
-    border: 1px solid #ddd; /* Optional: Add a border to the box */
-    border-radius: 4px; /* Optional: Makes the box edges rounded */
-}
-
 .location-button {
     background: none;
     border: none;
@@ -251,10 +155,8 @@
     display: inline-flex;
     align-items: center;
     padding: 0;
-    margin-left: auto; /* Ensures it stays at the far end */
+    margin-left: auto;
 }
-
-
 
 .location-button:hover {
     color: #2874a6;
@@ -279,23 +181,94 @@
     opacity: 1;
 }
 
-ul {
-    list-style-type: disc;
-    padding-left: 20px;
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
-ul li {
-    margin: 4px 0;
-    font-size: 14px;
+.modal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: slideUp 0.4s ease-in-out;
+    text-align: left;
 }
 
-td ul {
-    margin: 0;
-    padding: 0;
+.close-button {
+    background-color: transparent;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
 }
 
-.order-table th, 
-.order-table td {
-    border: 2px solid #000; /* Black and bold border */
-    font-weight: bold; /* Ensure text is bold as well */
+.close-button:hover {
+    color: #e74c3c;
+}
+
+.modal-content h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.modal-content ul {
+    list-style: disc inside;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.modal-content ul li {
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
