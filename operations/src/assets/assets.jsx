@@ -12,7 +12,7 @@ import operationalBanner from './Operationalbanner.jpeg';
 import edit from './edit.png';
 import wallet from './Wallet.jpg';
 import trolley from './trolley.png';
-import map_icon from './google-maps.png';
+import map_icon from './google_maps.png';
 
 export const assets = {
     noveglogo, 
