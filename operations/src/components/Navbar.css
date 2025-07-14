@@ -1,50 +1,33 @@
-/* Container */
+/* Navbar.css */
+
 .navbar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  width: 100%;
   background-color: #ffffff;
   padding: 12px 20px;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
 }
 
-/* Logo */
-.navbar-logo .logo-img {
+.logo-img {
   height: 40px;
-  flex-shrink: 0;
 }
 
-/* Home button (optional) */
-.home-div button {
-  background: transparent;
-  border: none;
-  font-weight: 600;
-  font-size: 16px;
-  margin-left: 20px;
-  cursor: pointer;
-  color: #333;
-}
-
-/* Center title */
 .navbar-links {
-  flex: 1;
-  text-align: center;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 600;
   color: #222;
 }
 
-/* Right-side buttons */
 .navbar-button {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
 }
 
-/* Profile image and logout */
 .profile-logout-container {
   display: flex;
   align-items: center;
@@ -58,7 +41,6 @@
   cursor: pointer;
 }
 
-/* Login/Logout buttons */
 .logout-button,
 .login-button {
   background-color: #ff4d1c;
@@ -69,7 +51,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 15px;
 }
 
 .logout-button:hover,
@@ -77,32 +58,74 @@
   background-color: #e54313;
 }
 
-/* Responsive: Small screens */
+/* Responsive Navbar for Tablets and Mobile Devices */
 @media (max-width: 768px) {
   .navbar-header {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* ✅ keeps left, center, right alignment */
+    flex-wrap: nowrap;              /* ❌ DO NOT wrap — stays in one line */
+    gap: 8px;
+    padding: 5px 10px;
+    overflow-x: auto;               /* ✅ enables horizontal scroll on tiny screens */
+  }
+
+
+  .logo-img {
+    height: 30px;
+    flex-shrink: 0;
   }
 
   .navbar-links {
-    order: 2;
-    font-size: 20px;
-  }
-
-  .navbar-logo {
-    order: 1;
+    font-size: 5px;
+    margin: 0 10px;
+    color: #333;
+    font-weight: 300;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; 
+    flex: 1; 
   }
 
   .navbar-button {
-    order: 3;
-    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
   }
 
-  .home-div {
-    order: 4;
-    margin-top: 10px;
-    
+  .logout-button,
+  .login-button {
+    font-size: 12px;
+    padding: 6px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .profile-img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .profile-logout-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-links {
+    font-size: 11px;
+  }
+
+  .logout-button,
+  .login-button {
+    font-size: 11px;
+    padding: 5px 8px;
   }
 }
