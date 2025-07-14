@@ -1,6 +1,7 @@
 import express from "express";
 import OrderModel from "../model/orderModel.js"; // Ensure this path is correct
 const router = express.Router();
+import { listRecentOrders } from "../controllers/orderController.js";
 
 router.get("/delivered", async (req, res) => {
     try {
@@ -27,5 +28,7 @@ router.get("/delivered", async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
+
+router.get("/recent", listRecentOrders);
 
 export default router;
