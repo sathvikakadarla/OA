@@ -11,6 +11,20 @@ export const listOrders = async (req, res) => {
     }
 };
 
+// GET /api/order/recent
+export const listRecentOrders = async (req, res) => {
+  try {
+    const recentOrders = await OrderModel.find()
+      .sort({ createdAt: -1 }) // sort by newest first
+      .limit(6);              // optional: limit to latest 10 orders
+
+    res.status(200).json({ success: true, data: recentOrders });
+  } catch (error) {
+    console.error("Error fetching recent orders:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
 // Place an order
 export const placeOrder = async (req, res) => {
     try {
