@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FiChevronDown } from "react-icons/fi";
+import { assets } from '../../assets/assets';
 import "./Ongoing_order.css";
 
 const OrderDelivered = () => {
@@ -16,7 +17,7 @@ const OrderDelivered = () => {
     useEffect(() => {
         const fetchDeliveredOrders = async () => {
             try {
-                const response = await axios.get("http://localhost:2000/api/orders");
+                const response = await axios.get("https://oa-backend-qdbq.onrender.com/api/orders");
                 if (response.data.success) {
                     setOrders(response.data.data);
                 } else {
@@ -62,31 +63,32 @@ const OrderDelivered = () => {
         return <p>Loading delivered orders...</p>;
     }
 
-    if (orders.length === 0) {
-        return (
-            <div>
-                <p>No delivered orders found.</p>
-                <button onClick={() => navigate("/dashboard")} className="back-button">&#8592;</button>
-            </div>
-        );
-    }
+    
 
     return (
         <div className="order-delivered-container">
             <button onClick={() => navigate("/dashboard")} className="left-arrow-button">&#8592;</button>
+
           {/* Dropdown for filtering */}
           <div className="filter-container">
             <button className="dropdown-toggle" onClick={toggleDropdown}>
-              Filter by Status <FiChevronDown />
+              {filterStatus ? `Status: ${filterStatus}` : "Filter by Status"} <FiChevronDown />
             </button>
             {showDropdown && (
               <ul className="dropdown-menu">
-                <li onClick={() => handleFilterSelect("Food Processing")}>
-                  Food Processing
-                </li>
+                {["Default","Order Placed", "Order Received", "Out for Delivery", "Delivered"].map((status) => (
+                  <li key={status} onClick={() => handleFilterSelect(status === "Default" ? "" : status)}>
+                    {status}
+                    </li>
+                ))}
               </ul>
             )}
           </div>
+            {filteredOrders.length === 0 ? (
+                <p style={{ marginTop: "20px" }}>
+                No orders found for <strong>{filterStatus}</strong>.
+                </p>
+            ) : (
             <table className="order-table" border="1" cellPadding="10" cellSpacing="0">
                 <thead>
                     <tr>
@@ -94,6 +96,7 @@ const OrderDelivered = () => {
                         <th>Order ID</th>
                         <th>Customer Details</th>
                         <th>Phone</th>
+                        <th>ShopName</th>
                         <th>Items</th>
                         <th>Amount</th>
                     </tr>
@@ -119,7 +122,7 @@ const OrderDelivered = () => {
                                         className="location-button"
                                         onClick={() => toggleAddressVisibility(order._id)}
                                     >
-                                        📍
+                                        <img src={assets.map_icon} className="map_icon" alt="Map icon" />
                                     </button>
                                 </div>
                                 <div
@@ -133,6 +136,7 @@ const OrderDelivered = () => {
                                 </div>
                             </td>
                             <td>{order.address.phone}</td>
+                            <td>{order.shopName || "N/A"}</td> {/* ✅ Display shop name */}
                             <td>
                                 <ul>
                                     {order.items.map((item) => (
@@ -147,6 +151,7 @@ const OrderDelivered = () => {
                     ))}
                 </tbody>
             </table>
+            )}
 
             {/* Modal for displaying order details */}
             {selectedOrder && (
@@ -161,6 +166,7 @@ const OrderDelivered = () => {
                         <p><strong>Phone:</strong> {selectedOrder.address.phone}</p>
                         <p><strong>Address:</strong> {selectedOrder.address.street}, {selectedOrder.address.city}, {selectedOrder.address.state}, {selectedOrder.address.zipcode}, {selectedOrder.address.country}</p>
                         <p><strong>Amount:</strong> ₹{selectedOrder.amount.toFixed(2)}</p>
+                        <p><strong>Shop Name:</strong> {selectedOrder.shopName || "N/A"}</p>
                         <h3>Items:</h3>
                         <ul>
                             {selectedOrder.items.map((item) => (
