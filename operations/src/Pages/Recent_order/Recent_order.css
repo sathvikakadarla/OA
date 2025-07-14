@@ -5,23 +5,21 @@
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  padding: 10px 20px;
+  padding: 5px;
   gap: 20px;
-  background-color: #ffffff;
+  background-color: rgb(255, 255, 255);
   flex-wrap: nowrap;
   box-sizing: border-box;
 }
 
 /* ========== RECENT ORDERS BOX ========== */
 .recent-orders {
-  flex: 1 1 70%;
-  max-width: 70%;
+  flex: 0 1 70%;
   background: #8fc6ee;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-x: auto; /* Prevent overflow on small screens */
   box-sizing: border-box;
 }
 
@@ -36,7 +34,6 @@
 /* ========== ORDERS TABLE ========== */
 .orders-table {
   width: 100%;
-  min-width: 600px; /* Helps ensure proper spacing */
   border-collapse: collapse;
 }
 
@@ -44,21 +41,37 @@
 .orders-table td {
   padding: 10px;
   border-bottom: 1px solid #eee;
-  text-align: left;
-  font-size: 15px;
+  vertical-align: top;
 }
 
 .orders-table th {
   font-weight: bold;
   text-transform: uppercase;
   border-bottom: 1px solid #ddd;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #f3f3f3;
+}
+
+.orders-table ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.orders-table li {
+  margin-bottom: 10px;
+}
+
+.orders-table li .shop-name {
+  font-size: 12px;
+  font-style: italic;
+  color: #000000;
+  margin-top: 3px;
+  display: block;
 }
 
 /* ========== DELIVERY CONTAINER ========== */
 .delivery-container {
-  flex: 1 1 30%;
-  max-width: 30%;
+  flex: 0 1 30%;
   background-color: #ed6da0;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -79,20 +92,59 @@
   padding: 10px 0;
 }
 
-/* ========== RESPONSIVE STYLES ========== */
+/* ========== CARD STYLES ========== */
+.order-card {
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  display: none; /* Hidden by default, shown on mobile */
+}
 
-/* Tablets (≤ 768px) */
+.order-card h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.order-card p {
+  font-size: 14px;
+  font-family:Verdana;
+  margin: 4px 0;
+}
+
+.order-card hr {
+  margin: 12px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.order-items ul {
+  padding-left: 16px;
+}
+
+.order-items li {
+  margin-bottom: 10px;
+}
+
+.order-items .shop-name {
+  display: block;
+  font-size: 12px;
+  font-style: italic;
+  color: #444;
+  margin-top: 4px;
+}
+
+/* ========== RESPONSIVE STYLES ========== */
 @media (max-width: 768px) {
   .order-container {
     flex-wrap: wrap;
-    flex-direction: column;
   }
 
   .recent-orders,
   .delivery-container {
     flex: 1 1 100%;
     max-width: 100%;
-    padding: 16px;
   }
 
   .orders-table th,
@@ -100,30 +152,28 @@
     padding: 8px;
     font-size: 14px;
   }
-
-  .recent-orders h2,
-  .delivery-heading h2 {
-    font-size: 20px;
-  }
 }
 
-/* Phones (≤ 480px) */
+/* ========== MOBILE VIEW ========== */
 @media (max-width: 480px) {
+  .orders-table {
+    display: none;
+  }
+
+  .mobile-order-cards .order-card {
+    display: block;
+  }
+
   .recent-orders,
   .delivery-container {
-    padding: 12px;
+    padding: 10px;
     box-shadow: none;
   }
 
   .orders-table th,
   .orders-table td {
-    font-size: 13px;
+    font-size: 12px;
     padding: 6px;
-  }
-
-  .orders-table {
-    display: block;
-    overflow-x: auto;
   }
 
   .recent-orders h2,
