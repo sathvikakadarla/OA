@@ -1,310 +1,247 @@
-/* Reset CSS */
+/* Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif; /* Modern font */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Full page background with a clean white look */
-body {
-    background-color: #ffffff; /* Clean white background */
-    font-size: 16px;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-/* Centered container for the page with slight shadow */
+/* Main Container */
 .credit-to-wallet-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    background-color: #fafafa; /* Light gray background for contrast */
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  max-width: 1200px;
+  padding: 40px 20px;
+  background-color: #fafafa;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
 }
 
-/* Inner container with a white background and smooth shadows */
+/* Inner Container */
 .credit-to-wallet-inner-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 40px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Adding subtle hover effect for the inner container */
 .credit-to-wallet-inner-container:hover {
-    transform: translateY(-5px); /* Slightly lifts the container on hover */
+  transform: translateY(-5px);
 }
 
-/* Input section with modern spacing */
+/* Input Sections */
 .input-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .input-section label {
-    font-size: 18px;
-    font-weight: 500;
-    color: #555;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;
+  letter-spacing: 0.5px;
 }
 
 .input-section input {
-    padding: 14px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    color: black;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: black;
+  transition: all 0.3s ease;
+  outline: none;
 }
 
 .input-section input:focus {
-    border-color: #2196f3; /* Soft blue border for input focus */
-    background-color: #ffffff;
-    
+  border-color: #2196f3;
+  background-color: #ffffff;
 }
 
-.input-section input:focus + label {
-    color: #2196f3; /* Change label color when input is focused */
-}
-
-/* Submit button styling with professional and sleek hover effect */
+/* Buttons */
 .submit-button {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 20px 0;
 }
 
 .submit-button button {
-    padding: 14px 35px;
-    font-size: 18px;
-    background-color: #ff5722; /* Orange for a vibrant feel */
-    color: white;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 14px 35px;
+  font-size: 18px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .submit-button button:hover {
-    background-color: #ff3d00; /* Slightly darker orange for hover */
-    transform: translateY(-2px); /* Lift the button slightly on hover */
+  background-color: #ff3d00;
+  transform: translateY(-2px);
 }
 
 .submit-button button:active {
-    transform: translateY(1px); /* Button slightly sinks when clicked */
+  transform: translateY(1px);
 }
 
-/* Responsive Design for Mobile */
-@media (max-width: 768px) {
-    .credit-to-wallet-inner-container {
-        width: 90%;
-        padding: 25px;
-    }
-
-    .input-section input {
-        width: 100%;
-    }
-
-    .submit-button button {
-        width: 100%;
-        padding: 16px 0;
-    }
-}
-
-/* Profile details section with subtle shadows and modern feel */
+/* Profile Details */
 .profile-details {
-    width: 100%;
-    background-color: #f5f7fa;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    margin-top: 30px;
-    transition: transform 0.3s ease-in-out;
+  width: 100%;
+  background-color: #f5f7fa;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
+  animation: fadeInUp 0.8s ease-out;
 }
 
-/* Profile hover effect */
 .profile-details:hover {
-    transform: translateY(-3px); /* Lift profile details slightly on hover */
+  transform: translateY(-3px);
 }
 
 .profile-details h3 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .profile-details p {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 10px;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
 }
 
 .profile-details p strong {
-    font-weight: bold;
-    color: #ff5722; /* Matching orange color for emphasis */
+  font-weight: bold;
+  color: #ff5722;
 }
 
-/* Subtle scrollbar styling for profile details */
-.profile-details::-webkit-scrollbar {
-    width: 8px;
-}
-
-.profile-details::-webkit-scrollbar-thumb {
-    background-color: #ff5722;
-    border-radius: 10px;
-}
-
-.profile-details::-webkit-scrollbar-track {
-    background-color: #f5f7fa;
-}
-
-/* Smooth animation for profile and content elements */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.profile-details,
-.input-section,
-.submit-button {
-    animation: fadeInUp 0.8s ease-out;
-}
-
-/* Top-left floating View History button */
+/* Top Left Floating Button */
 .top-left-button {
-    position: absolute;
-    top: 50%;
-    left: 20px;
-    z-index: 10;
+  position: absolute;
+  top: 20%;
+  left: 20px;
+  z-index: 10;
+}
+
+.top-left-button button {
+  padding: 10px 16px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.top-left-button button:hover {
+  background-color: #d84315;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .top-left-button button {
-    padding: 10px 16px;
-    background-color: #ff5722;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .top-left-button button:hover {
-    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .credit-to-wallet-container {
+    width: 70%;
   }
-  
-  /* History Table Styling */
-.credit-to-wallet-container {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+
+  .top-left-button {
+    top: 15%;
   }
-  
-  .credit-to-wallet-container h2 {
-    text-align: left;
-    margin-bottom: 10px;
-    margin-top: 0px;
-    font-size: 24px;
-    font-weight: bold;
-    color: black;
-  }
-  
-  .credit-to-wallet-container table {
+}
+
+@media (max-width: 768px) {
+
+   .top-left-button {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 0px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  .top-left-button button {
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #ff5722;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+  }
+
+  .top-left-button button:hover {
+    background-color: #d84315;
+  }
+  
+  .credit-to-wallet-container {
+    width: 90%;
+    padding: 20px 10px;
+  }
+
+  .credit-to-wallet-inner-container {
+    padding: 25px;
     box-shadow: none;
   }
-  
-  .credit-to-wallet-container th,
-  .credit-to-wallet-container td {
-    padding: 12px 16px;
-    text-align: left;
-    border: 1px solid #ccc;
+
+  .input-section {
+    margin-bottom: 20px;
+  }
+
+  .submit-button {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .submit-button button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .profile-details {
+    padding: 15px;
+  }
+
+  .profile-details h3 {
+    font-size: 20px;
+  }
+
+  .profile-details p {
     font-size: 14px;
   }
-  
-  .credit-to-wallet-container th {
-    background-color: #e6f0ff;
-    font-weight: bold;
-  }
-  
-  .credit-to-wallet-container tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .credit-to-wallet-container tr:hover {
-    background-color: #f1f7ff;
-  }
-  
-  .history-container {
-    max-width: 100%;
-    margin-top: 20px;
-    border: 1px solid #ddd;
-  }
-  
-  .history-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .history-table th,
-  .history-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-    background-color: white;
-  }
-  
-  .sticky-header {
-    position: sticky;
-    top: 0;
-    background-color: #f3f3f3;
-    z-index: 1;
-  }
-  
-  .table-body-scroll {
-    max-height: 400px; /* Adjust as needed */
-    overflow-y: auto;
-  }
-  
-  .table-body-scroll table {
-    width: 100%;
-    table-layout: fixed;
-  }
-  
+}
