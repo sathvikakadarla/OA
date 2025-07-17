@@ -8,7 +8,7 @@
   padding: 5px;
   gap: 20px;
   background-color: rgb(255, 255, 255);
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   box-sizing: border-box;
 }
 
