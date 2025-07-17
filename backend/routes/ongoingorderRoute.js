@@ -14,4 +14,16 @@ router.get("/", async (req, res) => {
     }
 });
 
+// Fetch only delivered (completed) orders
+router.get("/delivered", async (req, res) => {
+    try {
+        const deliveredOrders = await OrderModel.find({ status: "Delivered" }); // or whatever your status field is
+        res.json({ success: true, data: deliveredOrders });
+    } catch (error) {
+        console.error("Error fetching delivered orders:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+});
+
+
 export default router;
