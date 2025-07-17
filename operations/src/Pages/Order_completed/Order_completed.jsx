@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { assets } from '../../assets/assets';
 import "./Order_completed.css";
 
 const OrderDelivered = () => {
@@ -9,7 +10,6 @@ const OrderDelivered = () => {
     const [visibleAddresses, setVisibleAddresses] = useState({});
     const [selectedOrder, setSelectedOrder] = useState(null); // State for the selected order
     const navigate = useNavigate();
-
     useEffect(() => {
         const fetchDeliveredOrders = async () => {
             try {
@@ -67,6 +67,7 @@ const OrderDelivered = () => {
                         <th>Order ID</th>
                         <th>Customer Details</th>
                         <th>Phone</th>
+                        <th>Shop name</th>
                         <th>Items</th>
                         <th>Amount</th>
                     </tr>
@@ -92,7 +93,7 @@ const OrderDelivered = () => {
                                         className="location-button"
                                         onClick={() => toggleAddressVisibility(order._id)}
                                     >
-                                        📍
+                                        <img src={assets.map_icon} className="map_icon" alt="Map icon" />
                                     </button>
                                 </div>
                                 <div
@@ -106,6 +107,7 @@ const OrderDelivered = () => {
                                 </div>
                             </td>
                             <td>{order.address.phone}</td>
+                            <td>{order.shopName || "N/A"}</td>
                             <td>
                                 <ul>
                                     {order.items.map((item) => (
@@ -134,6 +136,7 @@ const OrderDelivered = () => {
                         <p><strong>Phone:</strong> {selectedOrder.address.phone}</p>
                         <p><strong>Address:</strong> {selectedOrder.address.street}, {selectedOrder.address.city}, {selectedOrder.address.state}, {selectedOrder.address.zipcode}, {selectedOrder.address.country}</p>
                         <p><strong>Amount:</strong> ₹{selectedOrder.amount.toFixed(2)}</p>
+                        <p><strong>Shop Name:</strong> {selectedOrder.shopName || "N/A"}</p>
                         <h3>Items:</h3>
                         <ul>
                             {selectedOrder.items.map((item) => (
