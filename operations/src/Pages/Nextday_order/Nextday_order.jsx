@@ -63,7 +63,7 @@ const Editoption = () => {
       >
         &#8592;
       </button>
-      <div className="dropdown-list fixed-dropdown">
+      <div className="dropdown-list">
         <label htmlFor="dropdown" />
         <select
           id="dropdown"
@@ -76,11 +76,19 @@ const Editoption = () => {
           <option value="option3"> Delivery Partner </option>
         </select>
       </div>
-      <div className="main-content">
-        {showCustomerListing && (
+      <div className="main-content-nextday-orders">
+        {selectedOption === "" && (
+          <div className="placeholder-wrapper">
+            <p className="placeholder-message">
+              Please select a category from the dropdown above to proceed.
+            </p>
+          </div>
+        )}
+        {selectedOption === "option1" && (
           <CustomerListing orders={orders} setOrders={setOrders} />
         )}
       </div>
+
     </div>
   );
 };
@@ -90,24 +98,41 @@ const CustomerListing = ({ orders, setOrders }) => {
   const [editableOrder, setEditableOrder] = useState({});
 
   const handleEdit = (order) => {
-    setEditOrderId(order._id);
-    setEditableOrder(order);
+    setEditOrderId(order.orderId); // 👈 using orderId instead of _id
+    setEditableOrder({
+      ...order,
+      address: { ...order.address },
+    });
   };
 
-  const handleInputChange = (field, value) => {
-    setEditableOrder((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = (field, value, isAddress = false) => {
+    if (isAddress) {
+      setEditableOrder((prev) => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          [field]: value,
+        },
+      }));
+    } else {
+      setEditableOrder((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    }
   };
 
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `https://oa-backend-qdbq.onrender.com/api/orders/${editOrderId}`,
+        `http://localhost:2000/api/order/${editOrderId}`, // 👈 PUT instead of GET
         editableOrder
       );
+
       if (response.data.success) {
         setOrders((prevOrders) =>
           prevOrders.map((order) =>
-            order._id === editOrderId ? response.data.data : order
+            order.orderId === editOrderId ? response.data.data : order
           )
         );
         setEditOrderId(null);
@@ -123,12 +148,7 @@ const CustomerListing = ({ orders, setOrders }) => {
 
   return (
     <div className="customer-container">
-      <table
-        className="customer-table"
-        border="1"
-        cellPadding="10"
-        cellSpacing="0"
-      >
+      <table className="customer-table" border="1" cellPadding="10" cellSpacing="0">
         <thead>
           <tr>
             <th>Order On</th>
@@ -147,60 +167,42 @@ const CustomerListing = ({ orders, setOrders }) => {
             <tr key={order._id}>
               <td>{new Date(order.createdAt).toLocaleDateString()}</td>
               <td>{order.orderId || "N/A"}</td>
-              {editOrderId === order._id ? (
+              {editOrderId === order.orderId ? (
                 <>
                   <td>
                     <input
                       type="text"
-                      value={editableOrder.address.firstName}
-                      onChange={(e) =>
-                        handleInputChange("address", {
-                          ...editableOrder.address,
-                          firstName: e.target.value,
-                        })
-                      }
+                      value={editableOrder.address.firstName || ""}
+                      onChange={(e) => handleInputChange("firstName", e.target.value, true)}
+                      placeholder="First Name"
                     />
                     <input
                       type="text"
-                      value={editableOrder.address.lastName}
-                      onChange={(e) =>
-                        handleInputChange("address", {
-                          ...editableOrder.address,
-                          lastName: e.target.value,
-                        })
-                      }
+                      value={editableOrder.address.lastName || ""}
+                      onChange={(e) => handleInputChange("lastName", e.target.value, true)}
+                      placeholder="Last Name"
                     />
                   </td>
                   <td>
                     <input
                       type="text"
-                      value={editableOrder.address.phone}
-                      onChange={(e) =>
-                        handleInputChange("address", {
-                          ...editableOrder.address,
-                          phone: e.target.value,
-                        })
-                      }
+                      value={editableOrder.address.phone || ""}
+                      onChange={(e) => handleInputChange("phone", e.target.value, true)}
+                      placeholder="Phone"
                     />
                   </td>
                   <td>
                     <input
                       type="text"
-                      value={editableOrder.address.street}
-                      onChange={(e) =>
-                        handleInputChange("address", {
-                          ...editableOrder.address,
-                          street: e.target.value,
-                        })
-                      }
+                      value={editableOrder.address.street || ""}
+                      onChange={(e) => handleInputChange("street", e.target.value, true)}
+                      placeholder="Street"
                     />
                   </td>
                 </>
               ) : (
                 <>
-                  <td>
-                    {order.address.firstName} {order.address.lastName}
-                  </td>
+                  <td>{order.address.firstName} {order.address.lastName}</td>
                   <td>{order.address.phone || "N/A"}</td>
                   <td>
                     {order.address.street}, {order.address.city},{" "}
@@ -213,8 +215,7 @@ const CustomerListing = ({ orders, setOrders }) => {
                 <ul className="item-content">
                   {order.items.map((item) => (
                     <li key={item._id}>
-                      {item.name} ({item.quantity} pcs) - ₹
-                      {item.price.toFixed(2)} each
+                      {item.name} ({item.quantity} pcs) - ₹{item.price.toFixed(2)} each
                     </li>
                   ))}
                 </ul>
@@ -222,15 +223,12 @@ const CustomerListing = ({ orders, setOrders }) => {
               <td>₹{order.amount.toFixed(2)}</td>
               <td>{order.status}</td>
               <td>
-                {editOrderId === order._id ? (
+                {editOrderId === order.orderId ? (
                   <button className="save-button" onClick={handleSave}>
                     Save
                   </button>
                 ) : (
-                  <button
-                    className="edit-button"
-                    onClick={() => handleEdit(order)}
-                  >
+                  <button className="edit-button" onClick={() => handleEdit(order)}>
                     Edit
                   </button>
                 )}
@@ -242,5 +240,6 @@ const CustomerListing = ({ orders, setOrders }) => {
     </div>
   );
 };
+
 
 export default Editoption;
