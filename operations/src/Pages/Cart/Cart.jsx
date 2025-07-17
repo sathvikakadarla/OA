@@ -3,7 +3,18 @@ import './Cart.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return isMobile;
+};
+
 const Cart = () => {
+  const isMobile = useIsMobile();
   const [mobileNumber, setMobileNumber] = useState('');
   const [userProfile, setUserProfile] = useState(null);
   const [cartItems, setCartItems] = useState([]);
@@ -25,7 +36,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!selectedCategory) return;
-    fetch(`http://localhost:2000/api/food/shops/by-category?category=${selectedCategory}`)
+    fetch(`https://oa-backend-qdbq.onrender.com/api/food/shops/by-category?category=${selectedCategory}`)
       .then((res) => res.json())
       .then((data) => setShops(data.shops || []))
       .catch(() => toast.error('Failed to load shops'));
@@ -33,7 +44,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (!selectedCategory || !selectedShop) return;
-    fetch(`http://localhost:2000/api/food/list?category=${selectedCategory}&shopId=${selectedShop}`)
+    fetch(`https://oa-backend-qdbq.onrender.com/api/food/list?category=${selectedCategory}&shopId=${selectedShop}`)
       .then((res) => res.json())
       .then((data) => setFilteredFoodItems(data.foodItems || []))
       .catch(() => toast.error('Failed to load food items'));
@@ -46,7 +57,7 @@ const Cart = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`http://localhost:2000/api/profile/${mobileNumber}`);
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/profile/${mobileNumber}`);
       const data = await res.json();
       if (res.ok) {
         setUserProfile(data);
@@ -64,7 +75,7 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch(`http://localhost:2000/api/cart/get`, {
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/get`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobileOrEmail: mobileNumber }),
@@ -84,9 +95,8 @@ const Cart = () => {
 
   const handleAddItemToCart = async (productId, quantityInGrams = 1) => {
     if (!userProfile) return toast.error('Load user profile first');
-
     try {
-      const res = await fetch(`http://localhost:2000/api/cart/add`, {
+      const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -107,30 +117,51 @@ const Cart = () => {
     }
   };
 
-  const handleEditItem = async (item) => {
-    const newQty = prompt('Enter new quantity (in grams):', item.quantity);
-    const quantityNum = parseInt(newQty, 10);
-    if (isNaN(quantityNum) || quantityNum <= 0) return toast.error('Invalid quantity');
+const handleEditItem = async (item) => {
+  const category = item.productId?.category?.toLowerCase();
+  const isEggs = category === 'eggs';
 
-    try {
-      await fetch(`http://localhost:2000/api/cart/remove`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
-      });
+  const currentQty = item.quantityInGrams;
 
-      await handleAddItemToCart(item.productId._id, quantityNum);
-    } catch {
-      toast.error('Error updating item');
-    }
-  };
+  const newQty = prompt(
+    `Enter new quantity${isEggs ? ' (number of eggs)' : ' (in grams)'}`,
+    currentQty
+  );
 
-const handleDeleteItem = async (item) => {
+  const quantityNum = parseInt(newQty, 10);
+  if (isNaN(quantityNum) || quantityNum <= 0) return toast.error('Invalid quantity');
+
   try {
-    const res = await fetch(`http://localhost:2000/api/cart/remove`, {
+    const removeRes = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobileOrEmail: mobileNumber, cartItemId: item._id }),
+      body: JSON.stringify({
+        mobileOrEmail: mobileNumber,
+        productId: item.productId._id,  // ✅ Use productId instead of cartItemId
+      }),
+    });
+
+    const removeData = await removeRes.json();
+    if (!removeRes.ok) return toast.error(removeData.message || 'Failed to remove existing item');
+
+    await handleAddItemToCart(item.productId._id, quantityNum);
+  } catch (err) {
+    console.error(err);
+    toast.error('Error updating item');
+  }
+};
+
+
+
+  const handleDeleteItem = async (item) => {
+  try {
+    const res = await fetch(`https://oa-backend-qdbq.onrender.com/api/cart/remove`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mobileOrEmail: mobileNumber,
+        productId: item.productId._id,  // ✅ Use productId here too
+      }),
     });
     const data = await res.json();
     if (res.ok) {
@@ -160,191 +191,209 @@ const handleDeleteItem = async (item) => {
   const selectedProduct = filteredFoodItems.find(i => i._id === selectedFoodItem);
 
   return (
-    <div className="credit-to-wallet-container">
-      <div className="credit-to-wallet-inner-container">
+    <>
+      <div className="credit-to-wallet-container">
+        <div className="credit-to-wallet-inner-container">
+          {/* --- SPLIT BLOCKS --- */}
+          <div className="top-row">
+            {/* LEFT SIDE: Profile Section */}
+            <div className="left-panel">
+              <div className="input-section">
+                <label>Mobile Number</label>
+                <input
+                  type="text"
+                  value={mobileNumber}
+                  onChange={handleMobileNumberChange}
+                  placeholder="Enter mobile number"
+                  maxLength="10"
+                />
+                <button onClick={fetchProfile}>Fetch Profile</button>
+              </div>
 
-        {/* Top Row */}
-        <div className="top-row">
-          {/* Left Panel */}
-          <div className="left-panel">
-            <div className="input-section">
-              <label htmlFor="mobile-number">Mobile Number</label>
-              <input
-                type="text"
-                value={mobileNumber}
-                onChange={handleMobileNumberChange}
-                placeholder="Enter mobile number"
-                maxLength="10"
-              />
-              <button onClick={fetchProfile}>Fetch Profile</button>
+              {userProfile && (
+                <div className="profile-details">
+                  <h3>User Profile</h3>
+                  <p><strong>Name:</strong> {userProfile.name}</p>
+                  <p><strong>Email:</strong> {userProfile.email}</p>
+                  <p><strong>Mobile:</strong> {userProfile.mobileNumber}</p>
+                  <p><strong>Balance:</strong> ₹{userProfile.currentBalance}</p>
+                  <button onClick={fetchCart}>View Cart</button>
+                </div>
+              )}
             </div>
 
+            {/* RIGHT SIDE: Add to Cart */}
             {userProfile && (
-              <div className="profile-details">
-                <h3>User Profile</h3>
-                <p><strong>Name:</strong> {userProfile.name}</p>
-                <p><strong>Email:</strong> {userProfile.email}</p>
-                <p><strong>Mobile:</strong> {userProfile.mobileNumber}</p>
-                <p><strong>Balance:</strong> ₹{userProfile.currentBalance}</p>
-                <button onClick={fetchCart}>View Cart</button>
+              <div className="middle-panel">
+                <div className="dropdown-selection">
+                  <h3>Add Food via Selection</h3>
+                  <div className="dropdown-group">
+                    <label>Select Category</label>
+                    <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+                      <option value="">-- Category --</option>
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {shops.length > 0 && (
+                    <div className="dropdown-group">
+                      <label>Select Shop</label>
+                      <select value={selectedShop} onChange={(e) => setSelectedShop(e.target.value)}>
+                        <option value="">-- Shop --</option>
+                        {shops.map((shop) => (
+                          <option key={shop._id} value={shop._id}>{shop.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {filteredFoodItems.length > 0 && (
+                    <>
+                      <div className="dropdown-group">
+                        <label>Select Food Item</label>
+                        <select
+                          value={selectedFoodItem}
+                          onChange={(e) => {
+                            setSelectedFoodItem(e.target.value);
+                            setSelectedQuantity(1);
+                          }}
+                        >
+                          <option value="">-- Food Item --</option>
+                          {filteredFoodItems.map((item) => (
+                            <option key={item._id} value={item._id}>
+                              {item.name} - ₹{item.price} ({item.quantity}g)
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {selectedProduct && (
+                        <div className="dropdown-group">
+                          <label>Quantity (× {selectedProduct.quantity}g)</label>
+                          <input
+                            type="number"
+                            min="1"
+                            value={selectedQuantity}
+                            onChange={(e) => setSelectedQuantity(Number(e.target.value))}
+                          />
+                          <div><strong>Total: ₹{selectedProduct.price * selectedQuantity}</strong></div>
+                        </div>
+                      )}
+
+                      <button onClick={handleDropdownAdd}>Add to Cart</button>
+                    </>
+                  )}
+                </div>
               </div>
             )}
           </div>
 
-          {/* Middle Panel - Only show if userProfile is available */}
-          {userProfile && (
-            <div className="middle-panel">
-              <div className="dropdown-selection">
-                <h3>Add Food via Selection</h3>
+          {/* --- CART DISPLAY --- */}
+          {cartItems.length > 0 && (
+            isMobile ? (
+              <div className="cart-cards">
+                <h3>Cart Items</h3>
+                {cartItems.map((item) => {
+                  const product = item.productId;
+                  const unitQty = product?.quantity || 1000;
+                  const unitPrice = product?.price || 0;
+                  const selectedQty = item.quantityInGrams || 0;
+                  const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
 
-                <div className="dropdown-group">
-                  <label>Select Category</label>
-                  <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                    <option value="">-- Category --</option>
-                    {categories.map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {shops.length > 0 && (
-                  <div className="dropdown-group">
-                    <label>Select Shop</label>
-                    <select value={selectedShop} onChange={(e) => setSelectedShop(e.target.value)}>
-                      <option value="">-- Shop --</option>
-                      {shops.map((shop) => (
-                        <option key={shop._id} value={shop._id}>{shop.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                {filteredFoodItems.length > 0 && (
-                  <>
-                    <div className="dropdown-group">
-                      <label>Select Food Item</label>
-                      <select
-                        value={selectedFoodItem}
-                        onChange={(e) => {
-                          setSelectedFoodItem(e.target.value);
-                          setSelectedQuantity(1);
-                        }}
-                      >
-                        <option value="">-- Food Item --</option>
-                        {filteredFoodItems.map((item) => (
-                          <option key={item._id} value={item._id}>
-                            {item.name} - ₹{item.price} ({item.quantity}g)
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {selectedProduct && (
-                      <div className="dropdown-group">
-                        <label>Quantity (Multiplier × {selectedProduct.quantity}g)</label>
-                        <input
-                          type="number"
-                          min="1"
-                          value={selectedQuantity}
-                          onChange={(e) => setSelectedQuantity(Number(e.target.value))}
-                        />
-                        <small>(Available: {selectedProduct.quantity || 0}g per unit)</small>
-                        <div><strong>Total: ₹{selectedProduct.price * selectedQuantity}</strong></div>
+                  return (
+                    <div className="cart-card" key={item._id}>
+                      <p><strong>Name:</strong> {product?.name}</p>
+                      <p><strong>Description:</strong> {product?.description}</p>
+                      <p><strong>Category:</strong> {product?.category}</p>
+                      <p><strong>Shop:</strong> {product?.shopId?.name || 'N/A'}</p>
+<p><strong>Quantity:</strong> {
+  product?.category.toLowerCase() === 'eggs'
+    ? `${selectedQty} (${selectedQty / 12} dozens)`
+    : `${selectedQty}g`
+}</p>
+                      <p><strong>Price:</strong> ₹{unitPrice} (for {
+  product?.category?.toLowerCase() === 'eggs'
+    ? unitQty
+    : `${unitQty}g`
+})</p>
+                      <p><strong>Total:</strong> ₹{totalPrice}</p>
+                      <div className="card-buttons">
+                        <button onClick={() => handleEditItem(item)}>Edit</button>
+                        <button onClick={() => handleDeleteItem(item)}>Delete</button>
                       </div>
-                    )}
-
-                    <button onClick={handleDropdownAdd}>Add to Cart</button>
-                  </>
-                )}
+                    </div>
+                  );
+                })}
               </div>
-            </div>
+            ) : (
+              <div className="cart-table">
+                <h3>Cart Items</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Shop</th>
+                      <th>Total Qty</th>
+                      <th>Price</th>
+                      <th>Total</th>
+                      <th>Edit</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cartItems.map((item) => {
+                      const product = item.productId;
+                      const unitQty = product?.quantity || 1000;
+                      const unitPrice = product?.price || 0;
+                      const selectedQty = item.quantityInGrams || 0;
+                      const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
+
+                      return (
+                        <tr key={item._id}>
+                          <td>{product?.name}</td>
+                          <td>{product?.description}</td>
+                          <td>{
+  product?.category.toLowerCase() === 'eggs'
+    ? `${selectedQty} (${selectedQty / 12} dozens)`
+    : `${selectedQty}g`
+}</td>
+                          <td>{product?.shopId?.name || 'N/A'}</td>
+                          <td>
+  {product?.category?.toLowerCase() === 'eggs'
+    ? selectedQty
+    : `${selectedQty}g`}
+</td>
+                          <td>
+  ₹{unitPrice} (for {
+    product?.category?.toLowerCase() === 'eggs'
+      ? unitQty
+      : `${unitQty}g`
+  })
+</td>
+                          <td>₹{totalPrice}</td>
+                          <td><button onClick={() => handleEditItem(item)}>Edit</button></td>
+                          <td><button onClick={() => handleDeleteItem(item)}>Delete</button></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )
           )}
+
+          {error && <div className="error-message">{error}</div>}
         </div>
+      </div>
 
-        <div className="right-panel">
-
-  {/* Table view for larger screens */}
-  {cartItems.length > 0 && (
-    <div className="cart-table desktop-view">
-      <h3>Cart Items</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Shop</th>
-            <th>Total Qty</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th>Edit</th>
-            <th>Remove</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map((item) => {
-            const product = item.productId;
-            const unitQty = product?.quantity || 1000;
-            const unitPrice = product?.price || 0;
-            const selectedQty = item.quantity || 0;
-            const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
-
-            return (
-              <tr key={item._id}>
-                <td>{product?.name}</td>
-                <td>{product?.description}</td>
-                <td>{product?.category}</td>
-                <td>{product?.shopId?.name || 'N/A'}</td>
-                <td>{selectedQty}g</td>
-                <td>₹{unitPrice} (for {unitQty}g)</td>
-                <td>₹{totalPrice}</td>
-                <td><button onClick={() => handleEditItem(item)}>Edit</button></td>
-                <td><button onClick={() => handleDeleteItem(item)}>Delete</button></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  )}
-
-  {/* Card view for mobile screens */}
-  {cartItems.length > 0 && (
-    <div className="cart-cards mobile-view">
-      <h3>Cart Items</h3>
-      {cartItems.map((item) => {
-        const product = item.productId;
-        const unitQty = product?.quantity || 1000;
-        const unitPrice = product?.price || 0;
-        const selectedQty = item.quantity || 0;
-        const totalPrice = Math.round((selectedQty / unitQty) * unitPrice);
-
-        return (
-          <div className="cart-card" key={item._id}>
-            <p><strong>Name:</strong> {product?.name}</p>
-            <p><strong>Description:</strong> {product?.description}</p>
-            <p><strong>Category:</strong> {product?.category}</p>
-            <p><strong>Shop:</strong> {product?.shopId?.name || 'N/A'}</p>
-            <p><strong>Quantity:</strong> {selectedQty}g</p>
-            <p><strong>Price:</strong> ₹{unitPrice} (for {unitQty}g)</p>
-            <p><strong>Total:</strong> ₹{totalPrice}</p>
-            <div className="card-buttons">
-              <button onClick={() => handleEditItem(item)}>Edit</button>
-              <button onClick={() => handleDeleteItem(item)}>Delete</button>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  )}
-
-</div>
-
-{error && <div className="error-message">{error}</div>}
-<ToastContainer />
-</div>
-</div>
-);
-}
+      {/* Toast container must be outside scrollable or clipped containers */}
+      <ToastContainer />
+    </>
+  );
+};
 
 export default Cart;
