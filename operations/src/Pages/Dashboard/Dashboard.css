@@ -231,3 +231,26 @@
     height: 36px;
   }
 }
+/* ==== FIXED Delivery Container === */
+.delivery-container {
+  min-height: 200px;         /* Prevent it from collapsing */
+  min-width: 250px;          /* Ensure a visible width */
+  flex: 0 1 30%;             /* Keep width logic consistent */
+  background-color: #ed6da0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+/* Optional: add placeholder text */
+.delivery-container::before {
+  content: "Delivery Partner";
+  font-size: 18px;
+  color: white;
+}
+
