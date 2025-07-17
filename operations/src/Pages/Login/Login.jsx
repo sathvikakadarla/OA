@@ -43,6 +43,20 @@ const Login = ({ onClose }) => {
         }
     };
 
+    useEffect(() => {
+    const handleTabClose = () => {
+        // Clear login flags or tokens
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user'); // or whatever key you're using
+    };
+
+    window.addEventListener('beforeunload', handleTabClose);
+
+    return () => window.removeEventListener('beforeunload', handleTabClose);
+    }, []);
+
+
     return (
         <div className="login-popup-overlay">
             <div className="wrapper">
