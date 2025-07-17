@@ -28,7 +28,7 @@ const Cart = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:2000/api/food/categories')
+    fetch('https://oa-backend-qdbq.onrender.com/api/food/categories')
       .then((res) => res.json())
       .then((data) => setCategories(data.categories || []))
       .catch(() => toast.error('Failed to load categories'));
