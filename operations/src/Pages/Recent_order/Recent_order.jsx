@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Recent_order.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Recentorders = () => {
   const [orders, setOrders] = useState([]);
@@ -8,7 +9,7 @@ const Recentorders = () => {
   useEffect(() => {
     const fetchRecentOrders = async () => {
       try {
-        const response = await axios.get("https://oa-backend-qdbq.onrender.com/api/order/recent");
+        const response = await axios.get("http://localhost:2000/api/order/recent");
         if (response.data.success) {
           setOrders(response.data.data);
         } else {
@@ -23,6 +24,9 @@ const Recentorders = () => {
 
   return (
     <div className="order-container">
+      <Link to="/dashboard" style={{ textDecoration: 'none', color: '#007BFF', marginBottom: '20px', display: 'inline-block' }}>
+  ← Back to Dashboard
+</Link>
       <div className="recent-orders">
         <h2>Recent Orders</h2>
         {orders.length === 0 ? (
@@ -110,12 +114,6 @@ const Recentorders = () => {
             </div>
           </>
         )}
-      </div>
-
-      <div className="delivery-container">
-        <div className="delivery-heading">
-          <h2>Delivery Partner</h2>
-        </div>
       </div>
     </div>
   );
