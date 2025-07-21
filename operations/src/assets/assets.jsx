@@ -13,6 +13,7 @@ import edit from './edit.png';
 import wallet from './Wallet.jpg';
 import trolley from './trolley.png';
 import map_icon from './google_maps.png';
+import dashboardicon from './dashboardicon.png';
 
 export const assets = {
     noveglogo, 
@@ -21,6 +22,7 @@ export const assets = {
     orderCompleted,
     pending,
     profile,
+    dashboardicon,
     adminCancellation,
     userCancellation, 
     upcomingOrder,
