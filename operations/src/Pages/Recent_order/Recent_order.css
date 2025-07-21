@@ -1,122 +1,117 @@
-/* ========== ORDER CONTAINER ========== */
-.order-container {
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  padding: 5px;
-  gap: 20px;
-  background-color: rgb(255, 255, 255);
-  flex-wrap: wrap;
+/* ========== Base ========== */
+* {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ========== RECENT ORDERS BOX ========== */
-.recent-orders {
-  flex: 0 1 70%;
-  background: #8fc6ee;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
-/* ========== HEADER INSIDE RECENT ORDERS ========== */
-.recent-orders h2 {
-  margin-bottom: 20px;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
   color: #333;
-  text-align: center;
-  font-size: 22px;
 }
 
-/* ========== ORDERS TABLE ========== */
+/* ========== Container ========== */
+.order-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* ========== Box for Recent Orders ========== */
+.recent-orders {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.recent-orders h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* ========== Table View ========== */
 .orders-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
+  color: #333;
+}
+
+.orders-table thead {
+  background-color: #f0f2f5;
 }
 
 .orders-table th,
 .orders-table td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e6e6e6;
   vertical-align: top;
+  text-align: left;
 }
 
 .orders-table th {
-  font-weight: bold;
   text-transform: uppercase;
-  border-bottom: 1px solid #ddd;
-  background-color: #f3f3f3;
+  font-weight: bold;
+  font-size: 13px;
+  color: #666;
 }
 
-.orders-table ul {
+.orders-table td ul {
+  padding-left: 0;
   list-style: none;
-  padding: 0;
   margin: 0;
 }
 
 .orders-table li {
   margin-bottom: 10px;
+  line-height: 1.4;
 }
 
-.orders-table li .shop-name {
+.orders-table .shop-name {
   font-size: 12px;
   font-style: italic;
-  color: #000000;
-  margin-top: 3px;
-  display: block;
+  color: #555;
 }
 
-/* ========== DELIVERY CONTAINER ========== */
-.delivery-container {
-  flex: 0 1 30%;
-  background-color: #ed6da0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+/* ========== Card Layout (Mobile) ========== */
+.mobile-order-cards {
+  display: none;
+  margin-top: 20px;
 }
 
-/* Delivery Heading */
-.delivery-heading h2 {
-  text-align: center;
-  color: #333;
-  font-weight: bold;
-  margin: 0;
-  padding: 10px 0;
-}
-
-/* ========== CARD STYLES ========== */
 .order-card {
-  border: 1px solid #ccc;
-  margin-bottom: 16px;
-  padding: 16px;
-  background-color: #fff;
-  border-radius: 8px;
-  display: none; /* Hidden by default, shown on mobile */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .order-card h3 {
   font-size: 16px;
-  margin-bottom: 6px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2c3e50;
 }
 
 .order-card p {
   font-size: 14px;
-  font-family:Verdana;
-  margin: 4px 0;
+  color: #444;
+  margin-bottom: 6px;
 }
 
-.order-card hr {
-  margin: 12px 0;
-  border: none;
-  border-top: 1px solid #ddd;
+.order-items h4 {
+  font-size: 15px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  color: #2c3e50;
 }
 
 .order-items ul {
@@ -125,59 +120,56 @@
 
 .order-items li {
   margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .order-items .shop-name {
-  display: block;
   font-size: 12px;
   font-style: italic;
-  color: #444;
-  margin-top: 4px;
+  color: #666;
 }
 
-/* ========== RESPONSIVE STYLES ========== */
+/* ========== Responsive ========== */
 @media (max-width: 768px) {
-  .order-container {
-    flex-wrap: wrap;
-  }
-
-  .recent-orders,
-  .delivery-container {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-
-  .orders-table th,
-  .orders-table td {
-    padding: 8px;
-    font-size: 14px;
-  }
-}
-
-/* ========== MOBILE VIEW ========== */
-@media (max-width: 480px) {
   .orders-table {
     display: none;
   }
 
-  .mobile-order-cards .order-card {
+  .mobile-order-cards {
     display: block;
   }
 
-  .recent-orders,
-  .delivery-container {
-    padding: 10px;
+  .recent-orders {
+    padding: 20px;
     box-shadow: none;
+  }
+
+  .recent-orders h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-card {
+    padding: 16px;
+  }
+
+  .order-card h3 {
+    font-size: 15px;
+  }
+
+  .order-card p,
+  .order-items li {
+    font-size: 13px;
+  }
+
+  .order-items h4 {
+    font-size: 14px;
   }
 
   .orders-table th,
   .orders-table td {
     font-size: 12px;
-    padding: 6px;
-  }
-
-  .recent-orders h2,
-  .delivery-heading h2 {
-    font-size: 18px;
+    padding: 8px;
   }
 }
