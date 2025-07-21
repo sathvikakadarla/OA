@@ -18,13 +18,13 @@ const Home = () => {
           <Link to="/dashboard" className="tile">
   <img src={assets.dashboardicon} alt="Dashboard" />
   <h2>Dashboard</h2>
-  <p>Dashboard</p> {/* New description */}
+  
 </Link>
 
 <Link to="/profile" className="tile">
   <img src={assets.profile} alt="Profile" />
   <h2>Profile</h2>
-  <p>Profile</p> {/* New description */}
+  
 </Link>
 
         </div>
