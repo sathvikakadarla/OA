@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     // Initialize state from localStorage
-    const storedState = localStorage.getItem('isLoggedIn');
+    const storedState = sessionStorage.getItem('isLoggedIn');
     return storedState === 'true'; // Convert string back to boolean
   });
 
