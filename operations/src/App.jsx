@@ -18,6 +18,7 @@ import { AuthProvider } from './Pages/AuthContext/AuthContext';
 import './App.css';
 import Cart from './Pages/Cart/Cart.jsx';
 import {assets} from './assets/assets.jsx' 
+import Recentorders from './Pages/Recent_order/Recent_order.jsx';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -56,6 +57,9 @@ function App() {
             <Route path="/credit-to-wallet" element={<CreditToWallet />} />
             <Route path="/history" element={<History />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/recentorders" element={<Recentorders />} />
+            
+
             
           </Routes>
         </main>
