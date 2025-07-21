@@ -16,6 +16,11 @@
   height: 40px;
 }
 
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
 .navbar-links {
   font-size: 30px;
   font-weight: 600;
@@ -58,6 +63,24 @@
   background-color: #e54313;
 }
 
+/* Home button styles */
+.home-button {
+  margin-left: 16px;
+  background-color: #ff4d1c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #e54313;
+}
+
 /* Responsive Navbar for Tablets and Mobile Devices */
 @media (max-width: 768px) {
   .navbar-header {
@@ -71,10 +94,13 @@
     overflow-x: auto;               /* ✅ enables horizontal scroll on tiny screens */
   }
 
-
   .logo-img {
     height: 30px;
     flex-shrink: 0;
+  }
+
+  .navbar-logo {
+    gap: 10px;
   }
 
   .navbar-links {
@@ -82,11 +108,11 @@
     margin: 0 10px;
     color: #333;
     font-weight: 300;
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 0; 
-    flex: 1; 
+    min-width: 0;
+    flex: 1;
   }
 
   .navbar-button {
@@ -97,7 +123,8 @@
   }
 
   .logout-button,
-  .login-button {
+  .login-button,
+  .home-button {
     font-size: 12px;
     padding: 6px 10px;
     white-space: nowrap;
@@ -124,7 +151,8 @@
   }
 
   .logout-button,
-  .login-button {
+  .login-button,
+  .home-button {
     font-size: 11px;
     padding: 5px 8px;
   }
