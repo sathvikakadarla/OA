@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
@@ -20,7 +20,7 @@ const Login = ({ onClose }) => {
         e.preventDefault();
 
         try {
-            const response = await fetch('https://oa-backend-qdbq.onrender.com/api/auth/login', {
+            const response = await fetch('http://localhost:2000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const Login = ({ onClose }) => {
                 setIsLoggedIn(true);
                 alert(data.message);
                 onClose(); // Close the popup after successful login
-                navigate('/Home');
+                navigate('/home');
             } else {
                 alert(data.message);
             }
@@ -42,20 +42,6 @@ const Login = ({ onClose }) => {
             alert('Something went wrong. Please try again.');
         }
     };
-
-    useEffect(() => {
-    const handleTabClose = () => {
-        // Clear login flags or tokens
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user'); // or whatever key you're using
-    };
-
-    window.addEventListener('beforeunload', handleTabClose);
-
-    return () => window.removeEventListener('beforeunload', handleTabClose);
-    }, []);
-
 
     return (
         <div className="login-popup-overlay">
